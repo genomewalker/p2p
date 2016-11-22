@@ -1,0 +1,48 @@
+[2016-11-22 22:48:20,682] multiqc                                            [DEBUG  ]  No MultiQC config found: /usr/local/lib/python2.7/site-packages/multiqc_config.yaml
+[2016-11-22 22:48:20,682] multiqc                                            [DEBUG  ]  No MultiQC config found: /Users/ufo/.multiqc_config.yaml
+[2016-11-22 22:48:20,682] multiqc                                            [DEBUG  ]  No MultiQC config found: multiqc_config.yaml
+[2016-11-22 22:48:20,682] multiqc                                            [DEBUG  ]  No MultiQC config found: /usr/local/lib/python2.7/site-packages/multiqc_config.yaml
+[2016-11-22 22:48:20,682] multiqc                                            [DEBUG  ]  No MultiQC config found: /Users/ufo/.multiqc_config.yaml
+[2016-11-22 22:48:20,682] multiqc                                            [DEBUG  ]  No MultiQC config found: multiqc_config.yaml
+[2016-11-22 22:48:20,682] multiqc                                            [DEBUG  ]  Command used: /usr/local/bin/multiqc fastqc_ac/ -o multiqc_ac/
+[2016-11-22 22:48:20,682] multiqc                                            [DEBUG  ]  Could not connect to multiqc.info for version check
+[2016-11-22 22:48:20,682] multiqc                                            [INFO   ]  This is MultiQC v0.8
+[2016-11-22 22:48:20,682] multiqc                                            [DEBUG  ]  Command     : /usr/local/bin/multiqc fastqc_ac/ -o multiqc_ac/
+[2016-11-22 22:48:20,682] multiqc                                            [DEBUG  ]  Working dir : /Users/ufo/Desktop/p2p/data/fastqc_output
+[2016-11-22 22:48:20,683] multiqc                                            [INFO   ]  Template    : default
+[2016-11-22 22:48:20,683] multiqc                                            [INFO   ]  Searching 'fastqc_ac/'
+[2016-11-22 22:48:20,683] multiqc                                            [DEBUG  ]  Analysing modules: gatk, quast, snpeff, qualimap, bcftools, featureCounts, methylQA, rseqc, picard, preseq, samblaster, samtools, bamtools, bismark, hicup, salmon, kallisto, star, tophat, bowtie2, bowtie1, cutadapt, trimmomatic, skewer, fastq_screen, fastqc
+[2016-11-22 22:48:20,683] multiqc                                            [DEBUG  ]  Using temporary directory for creating report: /var/folders/s1/7hqkd8bj4pjc8rvxncf_97_m0000gq/T/tmps32pU3
+[2016-11-22 22:48:20,687] multiqc                                            [DEBUG  ]  Ignoring file as matched an ignore pattern: .DS_Store
+[2016-11-22 22:48:20,835] multiqc.modules.gatk.gatk                          [DEBUG  ]  Could not find any reports in ('fastqc_ac/',)
+[2016-11-22 22:48:20,843] multiqc.modules.quast.quast                        [DEBUG  ]  Could not find any reports in ('fastqc_ac/',)
+[2016-11-22 22:48:20,909] multiqc.modules.snpeff.snpeff                      [DEBUG  ]  Could not find any data in ('fastqc_ac/',)
+[2016-11-22 22:48:20,930] multiqc.modules.qualimap.qualimap                  [DEBUG  ]  Could not find any reports in ('fastqc_ac/',)
+[2016-11-22 22:48:20,991] multiqc.modules.bcftools.bcftools                  [DEBUG  ]  Could not find any reports in ('fastqc_ac/',)
+[2016-11-22 22:48:20,997] multiqc.modules.featureCounts.feature_counts       [DEBUG  ]  Could not find any reports in ('fastqc_ac/',)
+[2016-11-22 22:48:21,001] multiqc.modules.methylQA.methylQA                  [DEBUG  ]  Could not find any reports in ('fastqc_ac/',)
+[2016-11-22 22:48:21,240] multiqc.modules.rseqc.rseqc                        [DEBUG  ]  Could not find any reports in ('fastqc_ac/',)
+[2016-11-22 22:48:21,689] multiqc.modules.picard.picard                      [DEBUG  ]  Could not find any reports in ('fastqc_ac/',)
+[2016-11-22 22:48:21,760] multiqc.modules.preseq.preseq                      [DEBUG  ]  Could not find any preseq data in ('fastqc_ac/',)
+[2016-11-22 22:48:21,821] multiqc.modules.samblaster.samblaster              [DEBUG  ]  Could not find any data in ('fastqc_ac/',)
+[2016-11-22 22:48:21,950] multiqc.modules.samtools.samtools                  [DEBUG  ]  Could not find any reports in ('fastqc_ac/',)
+[2016-11-22 22:48:22,012] multiqc.modules.bamtools.bamtools                  [DEBUG  ]  Could not find any reports in ('fastqc_ac/',)
+[2016-11-22 22:48:22,023] multiqc.modules.bismark.bismark                    [DEBUG  ]  Could not find any reports in ('fastqc_ac/',)
+[2016-11-22 22:48:22,029] multiqc.modules.hicup.hicup                        [DEBUG  ]  Could not find any HiCUP data in ('fastqc_ac/',)
+[2016-11-22 22:48:22,035] multiqc.modules.salmon.salmon                      [DEBUG  ]  Could not find any Salmon data in ('fastqc_ac/',)
+[2016-11-22 22:48:22,091] multiqc.modules.kallisto.kallisto                  [DEBUG  ]  Could not find any reports in ('fastqc_ac/',)
+[2016-11-22 22:48:22,097] multiqc.modules.star.star                          [DEBUG  ]  Could not find any reports in ('fastqc_ac/',)
+[2016-11-22 22:48:22,101] multiqc.modules.tophat.tophat                      [DEBUG  ]  Could not find any reports in ('fastqc_ac/',)
+[2016-11-22 22:48:22,159] multiqc.modules.bowtie2.bowtie2                    [DEBUG  ]  Could not find any reports in ('fastqc_ac/',)
+[2016-11-22 22:48:22,234] multiqc.modules.bowtie1.bowtie1                    [DEBUG  ]  Could not find any reports in ('fastqc_ac/',)
+[2016-11-22 22:48:22,291] multiqc.modules.cutadapt.cutadapt                  [DEBUG  ]  Could not find any reports in ('fastqc_ac/',)
+[2016-11-22 22:48:22,348] multiqc.modules.trimmomatic.trimmomatic            [DEBUG  ]  Could not find any Trimmomatic data in ('fastqc_ac/',)
+[2016-11-22 22:48:22,420] multiqc.modules.skewer.skewer                      [DEBUG  ]  Could not find any data in ('fastqc_ac/',)
+[2016-11-22 22:48:22,427] multiqc.modules.fastq_screen.fastq_screen          [DEBUG  ]  Could not find any reports in ('fastqc_ac/',)
+[2016-11-22 22:48:23,111] multiqc.modules.fastqc.fastqc                      [INFO   ]  Found 14 reports
+[2016-11-22 22:48:24,331] multiqc                                            [INFO   ]  Report      : multiqc_ac/multiqc_report.html
+[2016-11-22 22:48:24,332] multiqc                                            [INFO   ]  Data        : multiqc_ac/multiqc_data
+[2016-11-22 22:48:24,332] multiqc                                            [DEBUG  ]  Moving data file from '/var/folders/s1/7hqkd8bj4pjc8rvxncf_97_m0000gq/T/tmps32pU3/multiqc_data/multiqc_fastqc.txt' to 'multiqc_ac/multiqc_data'
+[2016-11-22 22:48:24,332] multiqc                                            [DEBUG  ]  Moving data file from '/var/folders/s1/7hqkd8bj4pjc8rvxncf_97_m0000gq/T/tmps32pU3/multiqc_data/multiqc_general_stats.txt' to 'multiqc_ac/multiqc_data'
+[2016-11-22 22:48:24,332] multiqc                                            [DEBUG  ]  Moving data file from '/var/folders/s1/7hqkd8bj4pjc8rvxncf_97_m0000gq/T/tmps32pU3/multiqc_data/multiqc_sources.txt' to 'multiqc_ac/multiqc_data'
+[2016-11-22 22:48:24,493] multiqc                                            [INFO   ]  MultiQC complete

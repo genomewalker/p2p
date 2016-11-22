@@ -1,0 +1,47 @@
+[2016-11-22 23:14:38,054] multiqc                                            [DEBUG  ]  No MultiQC config found: /usr/local/lib/python2.7/site-packages/multiqc_config.yaml
+[2016-11-22 23:14:38,054] multiqc                                            [DEBUG  ]  No MultiQC config found: /Users/ufo/.multiqc_config.yaml
+[2016-11-22 23:14:38,054] multiqc                                            [DEBUG  ]  No MultiQC config found: multiqc_config.yaml
+[2016-11-22 23:14:38,054] multiqc                                            [DEBUG  ]  No MultiQC config found: /usr/local/lib/python2.7/site-packages/multiqc_config.yaml
+[2016-11-22 23:14:38,055] multiqc                                            [DEBUG  ]  No MultiQC config found: /Users/ufo/.multiqc_config.yaml
+[2016-11-22 23:14:38,055] multiqc                                            [DEBUG  ]  No MultiQC config found: multiqc_config.yaml
+[2016-11-22 23:14:38,055] multiqc                                            [DEBUG  ]  Command used: /usr/local/bin/multiqc fastqc_merged_bad/ -o multiqc_merged_bad/
+[2016-11-22 23:14:38,055] multiqc                                            [DEBUG  ]  Could not connect to multiqc.info for version check
+[2016-11-22 23:14:38,055] multiqc                                            [INFO   ]  This is MultiQC v0.8
+[2016-11-22 23:14:38,055] multiqc                                            [DEBUG  ]  Command     : /usr/local/bin/multiqc fastqc_merged_bad/ -o multiqc_merged_bad/
+[2016-11-22 23:14:38,055] multiqc                                            [DEBUG  ]  Working dir : /Users/ufo/Desktop/p2p/data/fastqc_output
+[2016-11-22 23:14:38,055] multiqc                                            [INFO   ]  Template    : default
+[2016-11-22 23:14:38,055] multiqc                                            [INFO   ]  Searching 'fastqc_merged_bad/'
+[2016-11-22 23:14:38,056] multiqc                                            [DEBUG  ]  Analysing modules: gatk, quast, snpeff, qualimap, bcftools, featureCounts, methylQA, rseqc, picard, preseq, samblaster, samtools, bamtools, bismark, hicup, salmon, kallisto, star, tophat, bowtie2, bowtie1, cutadapt, trimmomatic, skewer, fastq_screen, fastqc
+[2016-11-22 23:14:38,056] multiqc                                            [DEBUG  ]  Using temporary directory for creating report: /var/folders/s1/7hqkd8bj4pjc8rvxncf_97_m0000gq/T/tmppueBlu
+[2016-11-22 23:14:38,101] multiqc.modules.gatk.gatk                          [DEBUG  ]  Could not find any reports in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:38,109] multiqc.modules.quast.quast                        [DEBUG  ]  Could not find any reports in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:38,143] multiqc.modules.snpeff.snpeff                      [DEBUG  ]  Could not find any data in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:38,156] multiqc.modules.qualimap.qualimap                  [DEBUG  ]  Could not find any reports in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:38,189] multiqc.modules.bcftools.bcftools                  [DEBUG  ]  Could not find any reports in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:38,193] multiqc.modules.featureCounts.feature_counts       [DEBUG  ]  Could not find any reports in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:38,197] multiqc.modules.methylQA.methylQA                  [DEBUG  ]  Could not find any reports in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:38,311] multiqc.modules.rseqc.rseqc                        [DEBUG  ]  Could not find any reports in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:38,531] multiqc.modules.picard.picard                      [DEBUG  ]  Could not find any reports in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:38,561] multiqc.modules.preseq.preseq                      [DEBUG  ]  Could not find any preseq data in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:38,588] multiqc.modules.samblaster.samblaster              [DEBUG  ]  Could not find any data in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:38,647] multiqc.modules.samtools.samtools                  [DEBUG  ]  Could not find any reports in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:38,677] multiqc.modules.bamtools.bamtools                  [DEBUG  ]  Could not find any reports in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:38,685] multiqc.modules.bismark.bismark                    [DEBUG  ]  Could not find any reports in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:38,691] multiqc.modules.hicup.hicup                        [DEBUG  ]  Could not find any HiCUP data in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:38,699] multiqc.modules.salmon.salmon                      [DEBUG  ]  Could not find any Salmon data in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:38,729] multiqc.modules.kallisto.kallisto                  [DEBUG  ]  Could not find any reports in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:38,734] multiqc.modules.star.star                          [DEBUG  ]  Could not find any reports in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:38,738] multiqc.modules.tophat.tophat                      [DEBUG  ]  Could not find any reports in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:38,772] multiqc.modules.bowtie2.bowtie2                    [DEBUG  ]  Could not find any reports in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:38,820] multiqc.modules.bowtie1.bowtie1                    [DEBUG  ]  Could not find any reports in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:38,849] multiqc.modules.cutadapt.cutadapt                  [DEBUG  ]  Could not find any reports in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:38,880] multiqc.modules.trimmomatic.trimmomatic            [DEBUG  ]  Could not find any Trimmomatic data in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:38,909] multiqc.modules.skewer.skewer                      [DEBUG  ]  Could not find any data in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:38,914] multiqc.modules.fastq_screen.fastq_screen          [DEBUG  ]  Could not find any reports in ('fastqc_merged_bad/',)
+[2016-11-22 23:14:39,227] multiqc.modules.fastqc.fastqc                      [INFO   ]  Found 7 reports
+[2016-11-22 23:14:39,827] multiqc                                            [INFO   ]  Report      : multiqc_merged_bad/multiqc_report.html
+[2016-11-22 23:14:39,828] multiqc                                            [INFO   ]  Data        : multiqc_merged_bad/multiqc_data
+[2016-11-22 23:14:39,828] multiqc                                            [DEBUG  ]  Moving data file from '/var/folders/s1/7hqkd8bj4pjc8rvxncf_97_m0000gq/T/tmppueBlu/multiqc_data/multiqc_fastqc.txt' to 'multiqc_merged_bad/multiqc_data'
+[2016-11-22 23:14:39,828] multiqc                                            [DEBUG  ]  Moving data file from '/var/folders/s1/7hqkd8bj4pjc8rvxncf_97_m0000gq/T/tmppueBlu/multiqc_data/multiqc_general_stats.txt' to 'multiqc_merged_bad/multiqc_data'
+[2016-11-22 23:14:39,828] multiqc                                            [DEBUG  ]  Moving data file from '/var/folders/s1/7hqkd8bj4pjc8rvxncf_97_m0000gq/T/tmppueBlu/multiqc_data/multiqc_sources.txt' to 'multiqc_merged_bad/multiqc_data'
+[2016-11-22 23:14:40,006] multiqc                                            [INFO   ]  MultiQC complete

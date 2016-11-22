@@ -1,0 +1,8 @@
+Module	Section	Sample Name	Source
+FastQC	all_sections	OSD33_6_14_MI_merged.ac	/Users/ufo/Desktop/p2p/data/fastqc_output/fastqc_merged_bad/OSD33_6_14_MI_merged.ac_fastqc.zip
+FastQC	all_sections	OSD190_6_14_KI_merged.ac	/Users/ufo/Desktop/p2p/data/fastqc_output/fastqc_merged_bad/OSD190_6_14_KI_merged.ac_fastqc.zip
+FastQC	all_sections	OSD189_6_14_YNG_merged.ac	/Users/ufo/Desktop/p2p/data/fastqc_output/fastqc_merged_bad/OSD189_6_14_YNG_merged.ac_fastqc.zip
+FastQC	all_sections	OSD31_6_14_PH_merged.ac	/Users/ufo/Desktop/p2p/data/fastqc_output/fastqc_merged_bad/OSD31_6_14_PH_merged.ac_fastqc.zip
+FastQC	all_sections	OSD191_6_14_DRW_merged.ac	/Users/ufo/Desktop/p2p/data/fastqc_output/fastqc_merged_bad/OSD191_6_14_DRW_merged.ac_fastqc.zip
+FastQC	all_sections	OSD32_6_14_NSI_merged.ac	/Users/ufo/Desktop/p2p/data/fastqc_output/fastqc_merged_bad/OSD32_6_14_NSI_merged.ac_fastqc.zip
+FastQC	all_sections	OSD188_6_14_RI_merged.ac	/Users/ufo/Desktop/p2p/data/fastqc_output/fastqc_merged_bad/OSD188_6_14_RI_merged.ac_fastqc.zip

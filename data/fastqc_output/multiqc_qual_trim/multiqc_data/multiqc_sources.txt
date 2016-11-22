@@ -1,0 +1,8 @@
+Module	Section	Sample Name	Source
+FastQC	all_sections	OSD189_6_14_YNG_merged.qc	/Users/ufo/Desktop/p2p/data/fastqc_output/fastqc_qual_trim/OSD189_6_14_YNG_merged.qc_fastqc.zip
+FastQC	all_sections	OSD31_6_14_PH_merged.qc	/Users/ufo/Desktop/p2p/data/fastqc_output/fastqc_qual_trim/OSD31_6_14_PH_merged.qc_fastqc.zip
+FastQC	all_sections	OSD191_6_14_DRW_merged.qc	/Users/ufo/Desktop/p2p/data/fastqc_output/fastqc_qual_trim/OSD191_6_14_DRW_merged.qc_fastqc.zip
+FastQC	all_sections	OSD188_6_14_RI_merged.qc	/Users/ufo/Desktop/p2p/data/fastqc_output/fastqc_qual_trim/OSD188_6_14_RI_merged.qc_fastqc.zip
+FastQC	all_sections	OSD32_6_14_NSI_merged.qc	/Users/ufo/Desktop/p2p/data/fastqc_output/fastqc_qual_trim/OSD32_6_14_NSI_merged.qc_fastqc.zip
+FastQC	all_sections	OSD33_6_14_MI_merged.qc	/Users/ufo/Desktop/p2p/data/fastqc_output/fastqc_qual_trim/OSD33_6_14_MI_merged.qc_fastqc.zip
+FastQC	all_sections	OSD190_6_14_KI_merged.qc	/Users/ufo/Desktop/p2p/data/fastqc_output/fastqc_qual_trim/OSD190_6_14_KI_merged.qc_fastqc.zip
