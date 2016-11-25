@@ -47,6 +47,7 @@ Once you have the folder ready we need to add the module system to your user:
 ```{bash}
 /bioinf/software/Modules/default/bin/add.modules
 source ~/.bash_profile
+module load rstudio
 ```
 
 Now we will be able to start [**rstudio**](https://www.rstudio.com/) with:
