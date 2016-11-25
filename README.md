@@ -23,3 +23,31 @@ There are two main folders:
 
 ## Friday
 Tutorial for Wednesday: click [here](http://htmlpreview.github.io/?https://raw.githubusercontent.com/genomewalker/p2p/master/friday/P2P_r_crash_course.html)
+
+Open a terminal and in your home directory run this if it's the first time you are cloning the repository:
+
+```{bash}
+git clone https://github.com/genomewalker/p2p.git
+```
+
+And if you already cloned this repository run:
+
+```{bash}
+git pull https://github.com/genomewalker/p2p.git
+```
+You can download a zipped file from [here](). Save it in your home folder and rename it to **p2p**
+
+Once you have the folder ready we need to add the module system to your user:
+
+```{bash}
+/bioinf/software/Modules/default/bin/add.modules
+source ~/.bash_profile
+```
+
+Now we will be able to start [**rstudio**](https://www.rstudio.com/) with:
+```{bash}
+rstudio &
+```
+
+
+
