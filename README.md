@@ -54,5 +54,7 @@ Now we will be able to start [**rstudio**](https://www.rstudio.com/) with:
 rstudio &
 ```
 
+### Other resources
+GUide to STatistical Analysis in Microbial Ecology (GUSTA ME): https://mb3is.megx.net/gustame
 
 
