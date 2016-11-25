@@ -22,7 +22,7 @@ There are two main folders:
 - figures: Plots created for the tutorial
 
 ## Friday
-Tutorial for Friday: click [here](https://cdn.rawgit.com/genomewalker/p2p/master/friday/P2P_r_crash_course.html)
+Tutorial for Friday: [here](https://cdn.rawgit.com/genomewalker/p2p/master/friday/P2P_r_crash_course.html)
 
 Open a terminal and in your home directory run this if it's the first time you are cloning the repository:
 
