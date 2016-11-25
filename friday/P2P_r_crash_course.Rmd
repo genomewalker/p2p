@@ -1280,6 +1280,28 @@ ggplot(ms174_alpha_asyEst, aes(x = Site, y = Estimator, color = Diversity)) +
   ylab("Diversity estimates") + 
   facet_grid(Diversity~.)
 ```
+Let's calculate Pielou's J with the following formula:
+
+$J =\frac{H'}{log(S)}$
+
+where **H'** is the the Shannon diversity estimator and **S** is the richness.
+
+```{r}
+ms174_eveness <- ms174_alpha_asyEst %>% 
+  filter(Diversity == "Species richness") %>% 
+  select(Site, Diversity, Observed) %>% 
+  left_join(ms174_alpha_asyEst %>% 
+              filter(Diversity == "Shannon diversity") %>% 
+              select(Site, Diversity, Estimator), by = "Site") %>% 
+  mutate(pielouJ = log(Estimator)/log(Observed))
+
+ggplot(ms174_eveness, aes(Site, pielouJ)) +
+  geom_bar(stat = "identity") +
+  theme_bw() +
+  xlab("") +
+  ylab("Pielou's evenness") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+```
 
 
 # Session Info
