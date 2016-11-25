@@ -37,6 +37,11 @@ git pull https://github.com/genomewalker/p2p.git
 ```
 You can download a zipped file from [here](https://github.com/genomewalker/p2p/archive/master.zip). Save it in your home folder and rename it to **p2p**
 
+```{bash}
+unzip p2p-master.zip
+mv p2p-master p2p
+```
+
 Once you have the folder ready we need to add the module system to your user:
 
 ```{bash}
