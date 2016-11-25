@@ -20,3 +20,6 @@ There are two main folders:
  - fastqc_output: fastqc and multiqc output
  - resources: Illumina adapters for bbduk.sh
 - figures: Plots created for the tutorial
+
+## Friday
+Tutorial for Wednesday: click [here](http://htmlpreview.github.io/?https://raw.githubusercontent.com/genomewalker/p2p/master/friday/P2P_r_crash_course.html#7_otu_abundance_table_normalisation)
