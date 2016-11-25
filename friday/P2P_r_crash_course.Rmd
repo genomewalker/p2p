@@ -1,7 +1,7 @@
 ---
 title: "P2P workshop"
 author: "Antonio Fernandez-Guerra & Pelin Yilmaz"
-date: "11/23/2016"
+date: "11/25/2016"
 output:
   html_document:
     toc: true
@@ -649,6 +649,12 @@ ggplot(delay, aes(dist, delay)) +
 
 # Reading SILVAngs results
 
+<br />
+
+<sup>**Disclaimer**: This is a dummy data set for demonstration. Some of the results and analyses will not be correct</sup>
+
+<br />
+
 One of the main questions that people starting to use R is how I read my data. Here we will practice how to read data and how to create OTU abundance tables from SILVAngs results.
 
 SILVAngs doesn't provide a typical OTU abundance table or a [BIOM](http://biom-format.org/) format file. In order to create those files from SILVAngs ouput we need to massage the data a little bit. In our example, SILVAngs results are found in **data/results** in our cloned github repository. First we need to go to our cloned folder and copy some files in the folder **data/for_R**. The files to copy are:
@@ -982,7 +988,7 @@ ms174_prevalence <- ms174_prevalence %>%
 ```
 
 
-```{r fig.width=6, fig.height=4}
+```{r}
 ms174_counts <- data.frame(class = c("Total OTUs","Absolute singletons", "Abundant singletons"), 
                            counts = c(length(unique(ms174_summary$otu_name)),
                                       dim(ms174_abs_singletons)[1], 
@@ -1034,7 +1040,7 @@ ms174_physeq_filt_prev
 
 We kept 303 OTUs from the original 27,267 OTUs. 
 
-We explore the counts for each sample after the filtering and remove two smples with less than 10,000 counts
+We explore the counts for each sample after the filtering:
 
 
 ```{r}
@@ -1053,7 +1059,7 @@ From [McMurdie et al. 2014](http://journals.plos.org/ploscompbiol/article?id=10.
 
 > many microbiome samples are sequenced at the same time on the same DNA sequencing machine, but often result in total numbers of sequences per sample that are vastly different. The common procedure for addressing this difference in sequencing effort across samples – different library sizes – is to either (1) base analyses on the proportional abundance of each species in a library, or (2) rarefy, throw away sequences from the larger libraries so that all have the same, smallest size. We show that both of these normalization methods can work when comparing obviously-different whole microbiomes, but that neither method works well when comparing the relative proportions of each bacterial species across microbiome samples.
 
-Here we will rarefy our data set to a common sequencing depth and the [Cumulative Sum Scaling (CSS)](http://www.nature.com/nmeth/journal/v10/n12/full/nmeth.2658.html) as implemented on the [metagenomeSEQ](https://bioconductor.org/packages/release/bioc/html/metagenomeSeq.html) package 
+Here we will rarefy our data set to a common sequencing depth and the [Cumulative Sum Scaling (CSS)](http://www.nature.com/nmeth/journal/v10/n12/full/nmeth.2658.html) as implemented on the [metagenomeSeq](https://bioconductor.org/packages/release/bioc/html/metagenomeSeq.html) package 
 
 
 First we will rarefy our table using the *phyloseq* function **rarefy_even_depth()** and we also will calculate the proportional abundances using the *phyloseq* function **transform_sample_counts**:
@@ -1066,13 +1072,26 @@ ms174_physeq_rar_prop <- transform_sample_counts(ms174_physeq_rar, function(x) x
 ms174_filt_prev_prop <- transform_sample_counts(ms174_physeq_filt_prev, function(x) x/sum(x))
 ```
 
-Now we will learn how to transform our data using the CSS transformation, for this we will create our own function:
+<br />
+
+Now we will learn how to transform our data using the CSS transformation. First we will install the package from Bioconductor:
+
+```{r eval=FALSE}
+source("https://bioconductor.org/biocLite.R")
+biocLite("metagenomeSeq")
+```
+
+And we load the library:
+
+```{r message=FALSE}
+library(metagenomeSeq)
+```
+
+To perform the transformation we need to create our own function:
 
 <sup>**Note**: Rows correspond to OTUs and columns to samples.</sup>
 
 ```{r}
-library(metagenomeSeq)
-
 cssTrans<-function(f.physeq.p = f.physeq.p, norm = norm, log = log){
   if (taxa_are_rows(f.physeq.p)){
     OTU <- as((otu_table(f.physeq.p)), "matrix")
@@ -1155,14 +1174,11 @@ u + geom_point(aes(color=distr), size=1) + theme_bw() +
 ms174_physeq_df <- as.data.frame(otu_table(ms174_physeq_filt_prev))
 ```
 
-We defined as endemic OTUs the ones observed in less than 20% of the samples (11) and with an abundance (counts) larger than 50. Ubiquitous are those observed in more than 80% of the samples
+We defined as endemic OTUs the ones observed in 3 samples and with a mean abundancw >= 100 and ubiquitous are those observed in 7 samples and with a mean abundance >= 100
 
+<br />
 
-The results are quite interesting and fitting our other analyses where we see a large heterogeneity in the OSD2014 coastal sites. Few OTUs are ubiquitous and they are not too abundant.   
-
-Endemic organisms
-
-Note: I am not an expert in Eukaryotic taxonomic, I just selected the level where I saw the Diatoms
+Let's explore which *phyla* are the endemic organisms:
 
 ```{r}
 empty_as_na <- function(x){
@@ -1179,10 +1195,14 @@ tax_table(ms174_physeq_filt_prev)[abundxsample %>%
   geom_bar() + 
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
-  xlab("") + ggtitle("Endemic taxa")
+  xlab("") + 
+  ylab("Number of phyla") +
+  ggtitle("Endemic taxa")
 ```
 
-Endemic organisms
+<br />
+
+And the *phyla* for the ubiquitous organisms:
 
 
 ```{r}
@@ -1195,12 +1215,17 @@ tax_table(ms174_physeq_filt_prev)[abundxsample %>%
   geom_bar() + 
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
-  xlab("") + ggtitle("Ubiquitous taxa")
+  xlab("") + 
+  ylab("Number of phyla") +
+  ggtitle("Ubiquitous taxa")
 ```
+
+<br />
 
 # Alpha diversity
 
 Knowing how many different types of organims are present in a sample (diversity) and how they are distributed (eveness) is one of the questions that microbial ecologists want to resolve. There are many different approaches to calculate the diversity indices. In this section we will use the package iNEXT ([Chao et al. 2014](http://onlinelibrary.wiley.com/doi/10.1890/13-0133.1/abstract); [Hsieh et al. 2016](http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12613/abstract)) for the rarefaction (interpolation) and prediction (extrapolation) of alpha diversity using Hill numbers:
+
 - richness (q = 0)
 - exponential Shannon entropy (q = 1)
 - inverse Simpson concentration (q = 2) 
@@ -1208,16 +1233,17 @@ Knowing how many different types of organims are present in a sample (diversity)
 Hill numbers represent diversity metrics as total effective species as weighted by sensitivity to rare taxa with value ‘q’ (richness the most sensitive to rare taxa and Simpson the least). 
 
 
-First we will install iNext from CRAN:
+First we will install **iNext** from CRAN:
 
 ```{r eval=FALSE}
 install.packages("iNEXT")
-library(iNEXT)
 ```
 
+For this example we will subsample the OTU table to use only 50 random OTUs. We will use only 10 bootstraps, in a real analysis the recommended bootstraps are 200.
 
 ```{r}
-ms174_df_subset <- as.data.frame(otu_table(ms174_physeq_filt_prev)[sample(1:303, 50),])
+library(iNEXT)
+ms174_df_subset <- as.data.frame(otu_table(ms174_physeq_filt_prev)[sample(1:ntaxa(ms174_physeq_filt_prev), 50),])
 ms174_alpha <- iNEXT(ms174_df_subset, q=c(0, 1, 2), datatype="abundance", nboot=10)
 ```
 
@@ -1256,7 +1282,7 @@ ggplot(ms174_alpha_asyEst, aes(x = Site, y = Estimator, color = Diversity)) +
 ```
 
 
-
+# Session Info
 
 ```{r}
 sessionInfo()
