@@ -222,7 +222,7 @@ l_named[3]
 class(l_named)
 ```
 
-We can see that the returned oject after subseeting is a list (use ?class to learn more about it). But if we want to get the elements in position 3 we should use **[[3]]** or as we have a named list we can use **$bool**. Let's see an example:
+We can see that the returned oject after subseeting is a list (use **?class** to learn more about it). But if we want to get the elements in position 3 we should use **[[3]]** or as we have a named list we can use **$bool**. Let's see an example:
 
 ```{r}
 l_named[[3]]
@@ -495,7 +495,7 @@ All verbs share a similar syntax:
 
 ### Examples
 
-The dplyr [vignette](https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html) has a very nice example of how to use all the different verbs, but lets show a few of them here using the same data *nycflights13* (get more information with ?nycflights13).
+The dplyr [vignette](https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html) has a very nice example of how to use all the different verbs, but lets show a few of them here using the same data *nycflights13* (get more information with **?nycflights13**).
 
 First we will install tidyverse and the data:
 
@@ -746,7 +746,7 @@ otu_tax_norel <- read_tsv(norel_file, col_names = FALSE, trim_ws = TRUE) %>%
 otu_tax_norel
 ```
 
-As we learnt, SILVAngs is applying a combined threshold (similarity and coverage) of 93% for the taxonomic classification. We are going to use the non-relative file to filter those OTUs and taxonomies that didn't pass the threshold. We are going to use the *dlpyr* function **replace** to change the taxonomy value to NoRelative (do ?replace for more information). And we are using the value matching operator **%in%** to find all those OTUs/taxonomies that didn't pass the threshold (check ?match for more details):
+As we learnt, SILVAngs is applying a combined threshold (similarity and coverage) of 93% for the taxonomic classification. We are going to use the non-relative file to filter those OTUs and taxonomies that didn't pass the threshold. We are going to use the *dlpyr* function **replace** to change the taxonomy value to NoRelative (do **?replace** for more information). And we are using the value matching operator **%in%** to find all those OTUs/taxonomies that didn't pass the threshold (check **?match** for more details):
 
 ```{r}
 otu_tax <- otu_tax %>%
