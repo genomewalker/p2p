@@ -1280,11 +1280,15 @@ ggplot(ms174_alpha_asyEst, aes(x = Site, y = Estimator, color = Diversity)) +
   ylab("Diversity estimates") + 
   facet_grid(Diversity~.)
 ```
-Let's calculate Pielou's J with the following formula:
+<br />
+
+We can calculate Pielou's J (eveness) with the following formula:
 
 $J =\frac{H'}{log(S)}$
 
 where **H'** is the the Shannon diversity estimator and **S** is the richness.
+
+<sup>**Note**: iNEXT calculates the exponential Shannon index</sup>
 
 ```{r}
 ms174_eveness <- ms174_alpha_asyEst %>% 
