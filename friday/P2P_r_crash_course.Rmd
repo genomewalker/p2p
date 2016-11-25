@@ -1,0 +1,1263 @@
+---
+title: "P2P workshop"
+author: "Antonio Fernandez-Guerra & Pelin Yilmaz"
+date: "11/23/2016"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Why R?
+***
+
+From the [r-project about page](https://www.r-project.org/about.html)...
+
+R is a language and environment for statistical computing and graphics. R provides a wide variety of statistical (linear and nonlinear modelling, classical statistical tests, time-series analysis, classification, clustering, …) and graphical techniques, and is highly extensible. And it's free. Also provides:
+
+- an effective data handling and storage facility
+- a suite of operators for calculations on arrays, in particular matrices
+- a large, coherent, integrated collection of intermediate tools for data analysis, graphical facilities for data analysis and display either on-screen or on hardcopy
+- a well-developed, simple and effective programming language which includes conditionals, loops, user-defined recursive functions and input and output facilities
+
+In addition, R has a large community that develops solutions for many different fields from economics to biology, many of those solutions (packages) are contributed to the [Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/). R has many *pros*, but also some *cons*:
+
+- steep learning curve
+- slow and can consume lot of memory
+
+
+# Basic R
+***
+
+We will cover the following topics:
+
+- Getting help with R
+- Assignment
+- Data structures
+- Subsetting
+- Flow controls
+- Functions
+- Packages
+
+A very useful resource are the [R cheat sheets](https://www.rstudio.com/resources/cheatsheets/) from Rstudio
+
+
+## Getting help with R
+
+Almost every function in R is documented and you will find an extensive description with examples about what the function does. You can use the function **help()** or **?** to access to the documentation. The R project has a great explantion [here](https://www.r-project.org/help.html). Examples:
+
+```{r}
+help(matrix)
+?matrix
+```
+
+
+## Assignment
+
+In R we use the operator **<-** to assign a value to the variable on the left side. The value can be an integer (i), double (d), string (s) or a boolean (b). Let'see how it works:
+
+```{r}
+i <- 42
+i
+
+d <- 4.2
+d
+
+s <- 'P2P workshop'
+s
+
+b <- TRUE
+b
+```
+
+A good explanation about the different data types can be found [here](http://www.dataperspective.info/2016/02/basic-data-types-in-r.html)
+
+<br />
+
+## Data structures
+
+In R we have different data structures, the most used are **Vectors**, **Lists**, **Matrices** and **Data Frames**. Hadley Wickham has a nice article describing each data structure [here](http://adv-r.had.co.nz/Data-structures.html) 
+
+<br />
+
+### Vectors
+
+Vectors are the basic data structures in R. Here we will describe the so called *atomic vectors*. Atomic vectors are 1-dimension and all elements contained must be the same type (integer, double, logical or character). Vectors can be created using the function **c()** to concatenate different variables in a vector. Let's see some examples:
+
+```{r}
+v_integer <- c(1, 2, 3)
+v_integer
+
+v_integer <- 1:3
+v_integer
+ 
+v_double <- c(1.2, 3.4, 5.6)
+v_double
+
+v_logical <- c(TRUE, FALSE, TRUE)
+v_logical
+
+v_character <- c("P2P", "workshop", "Bremen")
+v_character
+```
+
+We can add elements to the end of a vector:
+
+```{r}
+v_integer <- c(1, 2, 3)
+v_integer[4] <- 4
+v_integer
+```
+
+We can check the length of the vector with the function **length()**:
+
+```{r}
+length(v_integer)
+```
+
+<br />
+
+### Lists
+Lists are also vectors but they differ from atomic vectors that they can contain elements of different types, even lists. Instead of the function **c()** lists are created with **list()**. Let's see some examples:
+
+```{r}
+l <- list(1:3, "a", c(TRUE, FALSE, TRUE), c(2.3, 5.9))
+l
+```
+Let's check the type of the different elements in the list:
+
+```{r}
+str(l)
+```
+
+Elements of a list can be named:
+
+```{r}
+l_named <- list(int = 1:3, char = "a", bool = c(TRUE, FALSE, TRUE), dbl = c(2.3, 5.9))
+l_named
+```
+
+<br />
+
+### Matrices
+A Matrix is a two dimensional data structure, similar to vectors but it contains the dimension attribute. Each column in a matrix should contain the same data type. Matrices are specially used for mathematical operations. A matrix can be created with the function **matrix()**. Let's see some exmaples:
+
+```{r}
+m <- matrix(1:6, ncol = 3, nrow = 2)
+m
+```
+
+We can assign names to rows and columns:
+
+```{r}
+rownames(m) <- c("A", "B")
+colnames(m) <- c("a", "b", "c")
+m
+```
+
+Or check the dimensions of our matrix using **dim()**:
+
+```{r}
+dim(m)
+```
+
+<br />
+
+### Data Frames
+A data frame is the most common way of storing data in R. A data frame is basically a list of equal-length vectors. It's a 2-dimensional structure, so it shares properties of both the matrix and the list.
+
+```{r}
+df <- data.frame(x = 1:3, y = c("a", "b", "c"))
+df
+```
+
+<br />
+
+**Tip**: Always try to define the correct size of vectors, matrices... It will be much faster than let R dynamically grow your data structure. For more info [here](http://www.burns-stat.com/documents/books/the-r-inferno/) or [here](http://menugget.blogspot.de/2011/11/another-aspect-of-speeding-up-loops-in.html)
+
+<br />
+
+## Subsetting
+
+R keeps an index of any of the elements in the different data structures and we can use subsetting to select or exclude any of these elements. [Here](http://www.statmethods.net/management/subset.html) and [here](http://adv-r.had.co.nz/Subsetting.html) you can find very good explanations about subsetting the different data structures using the subsetting operators **[**, **$** or **[[**.
+
+<br />
+
+For the most simple data structures, *vectors*, we can use the operator **[** to get the elements by their position or index. Positions in R starts at 1. For example let's get the second element of *v_character*: 
+
+```{r}
+v_character
+v_character[2]
+```
+
+Or the second and third:
+
+```{r}
+v_character[2:3]
+```
+
+In the case we don't specify anything we will get the original vector:
+
+```{r}
+v_character[]
+```
+
+<br />
+
+For *lists* we can use the operator **[**, that will return a list or **[[** and **$** that will return the elements of the list. Let's see some examples with the **l_named** we created before:
+
+```{r}
+l_named
+```
+
+Let's get the elements in postion 3 in the list **l_named**:
+
+```{r}
+l_named[3]
+class(l_named)
+```
+
+We can see that the returned oject after subseeting is a list (use ?class to learn more about it). But if we want to get the elements in position 3 we should use **[[3]]** or as we have a named list we can use **$bool**. Let's see an example:
+
+```{r}
+l_named[[3]]
+l_named$bool
+
+class(l_named[[3]])
+class(l_named$bool)
+```
+
+Now we are accessing to the elements and *class* is telling us that is a logical vector.
+
+<br />
+
+For *matrices* and *data frames* are similar than for vectors, but here we have to dimensions and when using the operator **[** we need to specify rows and columns this way **[row, column]**. Let's see some examples with our data frame **df** that has three rows and two columns:
+
+```{r}
+df
+```
+
+Let's get first row:
+
+```{r}
+df[1,]
+```
+
+And second column:
+
+```{r}
+df[,2]
+```
+
+Or the element in the third row and second column:
+
+```{r}
+df[3, 2]
+```
+
+As you can see in the result we get an extra line with **Levels: a b c**. Those are factors, another data type that is very important and useful but we will not cover in this course, but you can learn more about them [here](http://rforpublichealth.blogspot.de/2012/11/data-types-part-3-factors.html)
+
+<br />
+
+## Flow control
+R also have flow control structures like other programming languages. We will see:
+- If-Then-Else
+- For Loop
+- While Loop
+
+<br />
+
+### If-Then-Else
+
+If-Then-Else is a conditional structure than allows us to compare different variables and test them if they are true. A pseudo-code of an If-Then-Else estatement can be:
+
+```
+if (condition) {
+    # do something
+} else {
+    # do something else
+}
+```
+
+An example in R comparing the values of **x** and **y**:
+
+```{r}
+x <- 10
+y <- 15
+if (x < y) {
+    print("x is smaller than y")
+} else {
+    print("x is greater than y")
+}
+```
+
+It also can be vectorized:
+
+```{r}
+x <- 10
+y <- 15
+ifelse(x < y, "x is smaller than y", "x is greater than y")
+```
+
+<br />
+
+### For Loop
+
+A for loop will repeat a specific block of code a known number of times iterating over a range of values.
+
+```{r}
+for (i in 1:10) {
+    print(i)
+}
+```
+
+We can iterate over a vector of characters:
+
+```{r}
+capitals <- c("Berlin", "London", "Madrid", "Paris")
+
+for (i in capitals) {
+    print(i)
+}
+```
+
+Or we can use their indices and access to the elements in a similar fashion we learn in the subsetting section:
+
+```{r}
+capitals
+length(capitals)
+```
+
+Here we are using the values from *1* to *4* (length of the *capitals* vectors) that will be stored in the variable **i** to iterate over the vector *capitals*
+
+```{r}
+for (i in 1:length(capitals)) {
+    print(capitals[i])
+}
+```
+
+We also can use the function **seq** to generate the numerical sequence of the vector *capitals*, from 1 to 4:
+
+```{r}
+seq(capitals)
+
+for (i in seq(capitals)) {
+    print(capitals[i])
+}
+```
+
+We also can write a more compact form:
+
+```{r}
+for (i in 1:4) print(capitals[i])
+```
+
+<br />
+
+### While Loop
+
+A while loop is very similar to a for loop but the while loop will iterate until a condition is reached. Let's see an example where we are summing *1* to the variable *i* while *i* is smaller than *10*. When we reach the condition, the while loop will stop.
+
+```{r}
+i <- 1
+while (i < 10) {
+    print(i)
+    i <- i + 1
+}
+```
+
+Always be sure there is a way to exit out of a while loop if not it will run forever.
+
+<br />
+
+## Functions
+
+Functions are bits of R code that perform a very specific code, they will keep your code cleaner and will allow you to repeat this task easily. You already used different function in this tutorial like *seq*, *length*, *dim* and you can create your own functions very easily. 
+
+Let's see some of the built-in functions that are useful to get the minimum, mean, median and maximum of a numerical vector:
+
+```{r}
+numbers <- c(1:10, 20:30)
+min(numbers)
+mean(numbers)
+median(numbers)
+max(numbers)
+```
+
+Let's create our own function that calculates the mean of our numerical vector:
+
+```{r}
+my_mean <- function(arg1){
+  total <- sum(arg1)
+  n <- length(arg1)
+  total/n
+}
+my_mean(arg1 = numbers)
+```
+
+Let's check if we get the same results as the R built-in function:
+
+```{r}
+my_mean(numbers) == mean(numbers)
+```
+
+Yay! It worked. Our new function **my_mean** requires one argument *arg1* (in our case a numerical vector) and returns the mean. For more information about functions check [here](https://nicercode.github.io/guides/functions/
+) and [here](http://adv-r.had.co.nz/Functions.html).
+
+<br />
+
+## Packages
+
+R community is generating lots of R code that performs a wide spectrum of analyses. They distribute this code in R packages. R packages can be retrieved from [The Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/), from [Bioconductor](https://www.bioconductor.org/) or straight from [Github](https://github.com/) with [devtools](https://github.com/hadley/devtools).
+
+We can install packages from CRAN using **install.packages()**. Let's see how we would install [**vegan**](https://cran.r-project.org/web/packages/vegan/index.html) the Community Ecology Package from Jari Oksanen that contains many useful methods for numerical ecology:
+
+```{r eval=FALSE}
+install.packages("vegan")
+```
+
+Once the package is installed we can load their functions using **library()** and we will be ready to perform our analyses:
+
+```{r}
+library(vegan)
+```
+
+If we want to install packages from Bioconductor is a bit different. Bioconductor is a repository with many packages related to genomics (and microbiome analyses). Bioconductor has it's own tool **biocLite** that will retrieve and install the package. Let's install [phyloseq](http://bioconductor.org/packages/release/bioc/html/phyloseq.html) a tool for *handling and analysis of high-throughput microbiome census data* that we will use later:
+
+```{r eval=FALSE}
+source("http://bioconductor.org/biocLite.R")
+biocLite("phyloseq")
+```
+
+And we can load phyloseq with:
+```{r}
+library(phyloseq)
+```
+
+Another method is to install the packages straight from a github repository. Hadley Wickham has developed devtools to make it a painless process. As example we will install [oligo4fun](https://github.com/genomewalker/oligo4fun), a package to perform *pre-oligotyping diagnostics for functional genes* from my github repository (shameless self-promotion) using **install_github()**. First we need to install *devtools* from CRAN and load it:
+
+```{r eval=FALSE}
+install.packages("devtools")
+library(devtools)
+```
+
+And install oligo4fun from github:
+
+```{r eval=FALSE}
+install_github("genomewalker/oligo4fun")
+```
+
+# Tidyverse
+
+Hadley Wickham proposed four basic principles that any computer interface for data management in R should follow in [the tidy tools manifesto](https://cran.r-project.org/web/packages/tidyverse/vignettes/manifesto.html): 
+
+- Reuse existing data structures
+- Compose simple functions with the pipe
+- Embrace functional programming
+- Designed for humans
+
+Recently he published [tidyverse](https://blog.rstudio.org/2016/09/15/tidyverse-1-0-0/) a collection of packages that follow those principles. In his book [R for data science](http://r4ds.had.co.nz/) showns how effective are those principles when using R for data science. Tidyverse loads the following packages:
+
+- [readr](https://cran.r-project.org/web/packages/readr/index.html): to import data from files
+- [tibble](https://cran.r-project.org/web/packages/tibble/index.html): better data frames
+- [tidyr](https://cran.r-project.org/web/packages/tidyr/index.html): data tidying and rearrangement
+- [dplyr](https://cran.r-project.org/web/packages/dplyr/index.html): a fast, consistent tool for working with data frame like objects
+- [purr](https://cran.r-project.org/web/packages/purrr/index.html): extend R fucntional programming capabilities
+- [ggplot2](https://cran.r-project.org/web/packages/ggplot2/index.html): data visualization using the grammar of graphics
+
+Here I will briefly introduce dplyr and ggplot, although during the tutorial we will use a combination of all.
+
+## dplyr
+Dplyr is a package that facilitates working with data frames or tibbles, key data structures in statistics and R. Usually in the data frames we will use, we will have one observation per row and columns will contain that represent a variable or measure or chracteristic. The most interesting (and useful) thing about dplyr is that provides "verbs" for data manipulation that helps to translate what you want to do to code. And dplyr is very fast!
+
+The dplyr verbs are:
+
+- **select**: return a subset of the columns of a data frame
+- **filter**: extract a subset of rows from a data frame based on logical conditions
+- **arrange**: reorder rows of a data frame
+- **rename**: rename variables in a data frame
+- **mutate**: add new variables/columns or transform existing variables
+- **summarise** / summarize: generate summary statistics of different variables in the data frame, possibly within strata
+- **group_by**: breaks down a dataset into specified groups of rows
+
+All verbs share a similar syntax:
+
+- The first argument is a data frame.
+- The subsequent arguments describe what to do with the data frame. Notice that you can refer to columns in the data frame directly without using $.
+- The result is a new data frame
+
+<br />
+
+### Examples
+
+The dplyr [vignette](https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html) has a very nice example of how to use all the different verbs, but lets show a few of them here using the same data *nycflights13* (get more information with ?nycflights13).
+
+First we will install tidyverse and the data:
+
+```{r eval=FALSE}
+install.packages(c("tidyverse","nycflights13"))
+```
+
+```{r}
+library(tidyverse)
+library(nycflights13)
+```
+
+And have a look:
+
+```{r}
+dim(flights)
+head(flights)
+```
+
+A quite big data set. Let's try the verb **filter** to select the flights on November 25th:
+
+```{r}
+filter(flights, month == 11, day == 25)
+```
+
+We got 942 flights, let's check how we would do it in base R:
+
+```{r}
+flights[flights$month == 11 & flights$day == 25, ]
+```
+
+We can see that using **filter** is closer to our natural language and this will help when we review our code after few months.
+
+Let's try now the **arrange** verb to sort the data frame by year, month and day:
+
+```{r}
+arrange(flights, year, month, day)
+```
+
+And in base R:
+```{r}
+flights[order(flights$year, flights$month, flights$day), ]
+```
+
+Now let's use **select** to keep only the columns we are interested:
+
+```{r}
+select(flights, year, month, day)
+```
+
+And if we want to know which is the average delay time, we can use **summarize**:
+
+```{r}
+summarise(flights, delay = mean(dep_delay, na.rm = TRUE))
+```
+
+Let's have a look to the **group_by** verb. We will group the flights based on the plane tail numbers (split the  dataset into individual planes):
+
+```{r}
+by_tailnum <- group_by(flights, tailnum)
+```
+
+And we will count the number of flights (count = n()), we will calculate the average distance (dist = mean(Distance, na.rm = TRUE)) and the average delay (delay = mean(ArrDelay, na.rm = TRUE)).
+
+```{r}
+delay <- summarise(by_tailnum,
+  count = n(),
+  dist = mean(distance, na.rm = TRUE),
+  delay = mean(arr_delay, na.rm = TRUE))
+delay
+```
+
+### Chaining
+
+Last example is about chaining verbs. Lets say we want to the average dayly arrival and departure delay for our data set and filter all days when there is an average delay greater than 30 minutes. To achieve this we would follow the following steps:
+
+1. Group by year, month and day
+2. Select arrival and departure delay
+3. Calculate the averages
+4. Filter the days with an average delay (arrival or departure) larger than 30 minutes
+
+Using dplyr that would be something like this:
+
+```{r}
+a1 <- group_by(flights, year, month, day)
+a2 <- select(a1, arr_delay, dep_delay)
+a3 <- summarise(a2,
+  arr = mean(arr_delay, na.rm = TRUE),
+  dep = mean(dep_delay, na.rm = TRUE))
+a4 <- filter(a3, arr > 30 | dep > 30)
+```
+
+If we want to avoid having intermediate results we can do:
+
+```{r}
+filter(
+  summarise(
+    select(
+      group_by(flights, year, month, day),
+      arr_delay, dep_delay
+    ),
+    arr = mean(arr_delay, na.rm = TRUE),
+    dep = mean(dep_delay, na.rm = TRUE)
+  ),
+  arr > 30 | dep > 30
+)
+```
+
+Well... this nested structure is not so easy to read and understand, and we can easily get lost. If you noticed, we need to read it from inside out. Luckily dplyr has the **%>%** operator or pipe, originally implemented in the [magrittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html) package and now re-implemented in dplyr (magrittr author is a co-author of dplyr). Using **%>%** rewrites multiple operations that we can read left-to-right, top-to-bottom:
+
+```{r}
+flights %>%
+  group_by(year, month, day) %>%
+  select(arr_delay, dep_delay) %>%
+  summarise(
+    arr = mean(arr_delay, na.rm = TRUE),
+    dep = mean(dep_delay, na.rm = TRUE)
+  ) %>%
+  filter(arr > 30 | dep > 30)
+```
+
+This is much nicer and now the code has a narrative that makes it much more easier to understand. Notice that now we are not using the the data frame as first parameter for the verb, as **flights %>% filter(month == 1)** turns into **filter(flights, month == 1)**
+
+<br />
+
+## ggplot2
+
+Besides basic R capabilities we can produce publication ready figures using [ggplot2](http://ggplot2.org/). Ggplot2 is a plotting system based on the grammar of graphics, which tries to take the good parts of base and lattice graphics and none of the bad parts. It takes care of many of the fiddly details that make plotting a hassle (like drawing legends) as well as providing a powerful model of graphics that makes it easy to produce complex multi-layered graphics.
+
+We will see a basic example of the great capabilities of ggplot2 but if you want to learn more, check the [documentation](http://docs.ggplot2.org/current/) or Hadley's book [ggplot2: Elegant Graphics for Data Analysis](http://amzn.com/0387981403?tag=ggplot2-20)
+
+Let's use the example where we calculated the average delay time by plane and now we filter those with a count > 20 and a distance < 2000:
+
+```{r}
+delay <- flights %>% group_by(tailnum) %>%
+  summarise(count = n(), 
+            dist = mean(distance, na.rm = TRUE), 
+            delay = mean(arr_delay, na.rm = TRUE)) %>%
+  filter(count > 20, dist < 2000)
+```
+
+And we will use ggplot2 to plot the results and explore if there is a relationship between the average delay and the average distance flown by the plane. Points are scaled by the number of flights of each plane and a generalized additive model has been used to fit the data.
+
+```{r}
+ggplot(delay, aes(dist, delay)) +
+  geom_point(aes(size = count), alpha = 1/2) +
+  geom_smooth() +
+  scale_size_area() +
+  theme_bw()
+```
+
+# Reading SILVAngs results
+
+One of the main questions that people starting to use R is how I read my data. Here we will practice how to read data and how to create OTU abundance tables from SILVAngs results.
+
+SILVAngs doesn't provide a typical OTU abundance table or a [BIOM](http://biom-format.org/) format file. In order to create those files from SILVAngs ouput we need to massage the data a little bit. In our example, SILVAngs results are found in **data/results** in our cloned github repository. First we need to go to our cloned folder and copy some files in the folder **data/for_R**. The files to copy are:
+
+- ~/p2p/friday/data/results/ssu/stats/data/*---ssu---otu_mapping.stats
+- ~/p2p/friday/data/results/ssu/stats/data/*---ssu---otu_sample_map.stats
+- ~/p2p/friday/data/results/ssu/stats/data/*---ssu---samples.stats
+
+
+<sup>**Note:** This example assumes you are running any flavor of Linux or Mac OS X and you cloned the repository in your home directory. The following commands should be executed in a terminal</sup>
+
+
+```{bash eval=FALSE}
+cd ~/p2p/friday/
+cp data/results/ssu/stats/data/*---ssu---otu_mapping.stats data/for_R/
+cp data/results/ssu/stats/data/*---ssu---otu_sample_map.stats data/for_R
+cp data/results/ssu/stats/data/*---ssu---samples.stats data/for_R
+```
+
+
+And then we shoud execute the following commands to prepare the taxomonic and non-relative files from the SILVAngs output:
+
+
+```{bash eval = FALSE}
+awk 'BEGIN{FS="\t";OFS="\t"}NR==1{next;}{split($9,a,"|"); print $1,$3,a[4],$4}'  data/results/ssu/exports/*---ssu---otus.csv > data/for_R/ms174_p2p-workshop_ref.taxonomy.tsv
+
+awk '$0~/>/{gsub(">","",$1);split($1,a,".");print a[1]}' data/results/ssu/exports/otu_references/*NoRelative.fna > data/forR/ms174_p2p-workshop_ref.norelatives.txt
+```
+
+Now we have all the pieces to create all what we need to produce the OTU abundance tables. Let's read the files and prepare the data.
+
+First we need to define where our files are. We will used the function **setwd()** to define our working directory at **~/p2p/friday**.
+
+```{r eval=FALSE}
+setwd("~/p2p/friday/")
+```
+
+Then we will use **list_files()** to scan the folder and identify where our files are based on a regular expression. We will use the function **paste()** to complete the path to the files:
+
+```{r}
+data_dir <- "data/for_R"
+
+sample_file <- paste(data_dir, list.files(data_dir, pattern = "---ssu---samples\\.stats$", recursive = TRUE), sep = "/")
+
+otu_file <- paste(data_dir, list.files(data_dir, pattern = "---ssu---otu_sample_map\\.stats$", recursive = TRUE), sep = "/")
+
+otumap_file <- paste(data_dir, list.files(data_dir, pattern = "---ssu---otu_mapping\\.stats$", recursive = TRUE), sep = "/")
+
+tax_file <- paste(data_dir, list.files(data_dir, pattern = "\\.taxonomy\\.tsv$", recursive = TRUE), sep = "/")
+
+norel_file <- paste(data_dir, list.files(data_dir, pattern = "\\.norelatives\\.txt$", recursive = TRUE), sep = "/")
+```
+
+Now is time to read the files using the functions **read_tsv()** from *readr* package. If you have a look to the commands we are defining that some of the files have *column names* with **col_names**, and specifying the *data types* of the columns with **col_types**. In addition we are using *dplyr* **rename** function to change the column names.
+
+```{r}
+samples <- read_tsv(sample_file, col_names = TRUE, col_types = list(col_character(), col_character(), col_character(), col_character()), trim_ws = TRUE) %>%
+  rename(sample_id = `Sample Id`, sample_name = `Sample Name`, 
+         sample_type = `Sample Type`, sample_description = `Sample Description`)
+
+samples
+
+otus <- read_tsv(otu_file, col_names = TRUE, 
+                 col_types = list(`_sample_id` = col_character(), 
+                                  `Found In` = col_character(), Abundances = col_character()), 
+                 trim_ws = TRUE) %>%
+  rename(primary_accession = primaryAccession, sample_id = `_sample_id`, 
+         found_in = `Found In`, abundance = Abundances)
+
+otus
+
+otu_map <- read_tsv(otumap_file, col_names = TRUE, 
+                    col_types = list(`Mapping Id` = col_character(), `Cluster Id` = col_character(),
+                                     `Found In` = col_character(), Members = col_character()), 
+                    trim_ws = TRUE) %>%
+  rename(mapping_id = `Mapping Id`, cluster_id = `Cluster Id`, 
+         cluster_accession = `Cluster Accession`, number_otu = `Number of OTUs`, 
+         clustered = Clustered, replicates = Replicates, found_in = `Found In`, members = Members)
+otu_map
+
+otu_tax <- read_tsv(tax_file, col_names = FALSE, 
+                    col_types = list(X4 = col_integer()), 
+                    trim_ws = TRUE) %>%
+  rename(label = X1, otuid = X2, taxonomy = X3, counts = X4)
+otu_tax
+
+otu_tax_norel <- read_tsv(norel_file, col_names = FALSE, trim_ws = TRUE) %>%
+  rename(otuid = X1)
+otu_tax_norel
+```
+
+As we learnt, SILVAngs is applying a combined threshold (similarity and coverage) of 93% for the taxonomic classification. We are going to use the non-relative file to filter those OTUs and taxonomies that didn't pass the threshold. We are going to use the *dlpyr* function **replace** to change the taxonomy value to NoRelative (do ?replace for more information). And we are using the value matching operator **%in%** to find all those OTUs/taxonomies that didn't pass the threshold (check ?match for more details):
+
+```{r}
+otu_tax <- otu_tax %>%
+  mutate(taxonomy = replace(taxonomy, otuid %in% otu_tax_norel$otuid, "NoRelative")) %>%
+  filter(otuid %in% otu_map$cluster_accession)
+
+otus <- otus %>%
+  filter(primary_accession %in% otu_map$cluster_accession)
+```
+
+Now we have to separate each OTU from it's sample due to the global SILVAngs clustering. For this we are going to use the function **strsplit** from base R to split each element of the columns *found_in* and *abundance* based on the **,** and use **unnest()** from *tidyr* to convert each element from the list returned by **strsplit** in its own row.
+
+
+```{r}
+otus_sample <- otus %>%
+  select(primary_accession, found_in, abundance) %>%
+  mutate(found_in = strsplit(found_in, split = ","), abundance = strsplit(abundance, split = ",")) %>%
+  unnest() %>%
+  left_join(samples, by = c("found_in" = "sample_id")) %>%
+  select(primary_accession, sample_name, abundance) %>%
+  arrange(primary_accession) %>%
+  group_by(sample_name, primary_accession) %>%
+  summarise(abundance = sum(as.integer(abundance)))
+```
+
+Finally we can use the function **spread** from *tidyr* to create the abundance table:
+
+```{r}
+otuXsample <- otus_sample %>%
+  spread(sample_name, abundance, fill = 0, convert = TRUE)
+```
+
+Next step is to create the taxonomy table. We will split the *taxonomy* column in the 6 taxonomic levels from SILVA. For this we are going to use the function **gsub** from base R to remove the last *;* from the taxonomy and **separate** from *tidyr* to split the taxonomy string on the 6 levels:
+
+```{r}
+tax_levels <- c("domain", "phylum", "class", "order", "family", "genus")
+otu_tax <- otu_tax %>%
+  select(otuid, taxonomy) %>%
+  mutate(taxonomy = gsub(";$", "", taxonomy)) %>%
+  separate(taxonomy, into = tax_levels, sep = ";", fill = "right", extra = "merge", remove = TRUE)
+```
+
+Finally we have both data frames, let's save them to a file using the function **write_table()** from readr:
+
+```{r}
+otuXsample_file <- paste(data_dir, "ms174_p2p-workshop_ref_otuXsample.tsv", sep = "/")
+write_tsv(otuXsample, otuXsample_file)
+```
+
+And we will export the file in biom format using the package **biomformat**. First we need to install the package from Bioconductor:
+
+```{r eval=FALSE}
+source("http://bioconductor.org/biocLite.R")
+biocLite("biomformat")
+library(biomformat)
+```
+
+In addition to the SILVAngs files we are going to read part of the contextual data of our samples. The file **ms174_p2p-workshop_ref_sample_data.tsv** is located in **data/for_R**. Let's use **read_tsv**:
+
+```{r}
+contextual_data_file <- paste(data_dir, "ms174_p2p-workshop_ref_sample_data.tsv", sep = "/")
+
+contextual_data <- read_tsv(contextual_data_file, col_names = TRUE, col_types = list(osd_id = col_character(), local_date = col_date(format = "%d/%m/%Y"))) %>%
+  select(-local_date, -protocol)
+contextual_data
+```
+
+
+Now we have all pieces to create the biom file. We need:
+
+- **Data**: Our OTU abundance table **otuXsample** where rows are OTUs and columns are samples
+- **Sample_metadata**: Our contextual data table **contextual_data**
+- **Observation metadata**: Our taxonomy table **otu_tax**
+
+Before creating our biom object, we need to convert the *tibbles* to a data frame:
+
+```{r}
+otuXsample <- as.data.frame(otuXsample)
+rownames(otuXsample) <- otuXsample$primary_accession
+otuXsample$primary_accession <- NULL
+
+contextual_data <- as.data.frame(contextual_data)
+rownames(contextual_data) <- contextual_data$label
+contextual_data$label <- NULL
+
+otu_tax <- as.data.frame(otu_tax)
+rownames(otu_tax) <- otu_tax$otuid
+otu_tax$otuid <- NULL
+```
+
+And now we can create our biom object where we have all three tables integrated with **make_biom**:
+
+```{r}
+library(biomformat)
+otuXsample_biom <- make_biom(otuXsample, sample_metadata = contextual_data, observation_metadata = otu_tax)
+otuXsample_biom
+```
+
+Let's export the object to a file with the function **write_biom**:
+
+```{r}
+otuXsample_biom_file <- paste(data_dir, "ms174_p2p-workshop_ref_otuXsample.biom", sep = "/")
+write_biom(otuXsample_biom, otuXsample_biom_file)
+```
+
+
+# Phyloseq
+
+The phyloseq package is a tool to import, store, analyze, and graphically display complex phylogenetic sequencing data that has already been clustered into Operational Taxonomic Units (OTUs), especially when there is associated sample data, phylogenetic tree, and/or taxonomic assignment of the OTUs. We will use the biom object we created to create a phyloseq object, more information [here](http://joey711.github.io/phyloseq/import-data.html). We will use three main methods:
+
+- **otu_table**: for constructing and accessing OTU abundance objects
+- **sample_data**: for constructing and accessing a table of sample-level variables
+- **tax_table**: for constructing and accessing a table of taxonomic names, organized with ranks as columns
+
+And we will combine them with **phyloseq**:
+
+```{r}
+library(phyloseq)
+
+otutable <- otu_table(as.matrix(biom_data(otuXsample_biom)), taxa_are_rows = TRUE) 
+sampletable <- sample_data(as.data.frame(data.matrix(sample_metadata(otuXsample_biom))))
+taxtable <- tax_table(as.matrix(observation_metadata(otuXsample_biom)))
+ms174_physeq <- phyloseq(otutable, sampletable, taxtable)
+ms174_physeq
+```
+
+Phyloseq provides many methods to access our data. For example let's get the names of the samples:
+
+```{r}
+sample_names(ms174_physeq)
+```
+
+Or the sample variable names:
+```{r}
+sample_variables(ms174_physeq)
+```
+
+Or the OTU names:
+```{r}
+taxa_names(ms174_physeq)[1:10]
+```
+
+We can subset data, for example let's keep only the OTUs from Bacteroidetes:
+```{r}
+ms174_physeq_bct = subset_taxa(ms174_physeq, phylum == "Bacteroidetes")
+ms174_physeq_bct
+```
+We can see that 3260 OTUs belong to the phylum Bacteroidetes.
+
+Phyloseq also provides really nice graphical capabilities based on ggplot2. For example with **plot_bar** we can plot the abundance of Bacteroidetes in each sample:
+
+```{r}
+plot_bar(ms174_physeq_bct)
+```
+
+And color the plot based in the order:
+```{r}
+plot_bar(ms174_physeq_bct, fill="order")
+```
+
+We can see that Flavobacteriales are the most abundant.
+
+
+Let's remove all Chloroplasts and Mitochondria OTUs:
+```{r}
+ms174_physeq <- subset_taxa(ms174_physeq, class !="Chloroplast" | family != "Mitochondria")
+ms174_physeq
+```
+
+Phyloseq also has methods to rarefy to even depth and estimate and calculate measures of alpha diversity:
+```{r}
+ms174_physeq_rar <- rarefy_even_depth(ms174_physeq)
+plot_bar(ms174_physeq_rar)
+plot_richness(ms174_physeq_rar, measures=c("Observed", "Shannon", "InvSimpson"))
+```
+
+And we even can perform ordinations. For example MDS with Euclidean distance and colored by temperature:
+```{r}
+ms174_physeq_even <- transform_sample_counts(ms174_physeq, function(x) 1E6 * x/sum(x))
+ms174_physeq_sum <- tapply(taxa_sums(ms174_physeq_even), tax_table(ms174_physeq_even)[, "phylum"], sum, na.rm=TRUE)
+top5phyla <- names(sort(ms174_physeq_sum, TRUE))[1:5]
+ms174_physeq_even <- prune_taxa((tax_table(ms174_physeq_even)[, "phylum"] %in% top5phyla), ms174_physeq_even)
+
+ms174_physeq_ord <- ordinate(ms174_physeq_even, "MDS", "euclidean")
+plot_ordination(ms174_physeq_even, ms174_physeq_ord, type="samples", color = "noaa_temperature")
+```
+
+<sup>**Note**: All the results shown here are just for demonstration and shouldn't be applied in real life analyses. For proper analytical workflow please visit the phyloseq [website](https://joey711.github.io/phyloseq/index.html)</sup>
+
+# Exploring the data
+
+Now we will use all what we learnt to explore our data set. First we will create a summary file where we will group the OTUs by sample, we will calculate the relative abundance of each OTU and we will remove those OTUs with 0 counts. 
+
+```{r}
+library(magrittr)
+ms174_summary <- otu_table(ms174_physeq) %>% 
+  as.data.frame() %>%
+  mutate(otu_name = row.names(.)) %>%
+  gather(otu_name, count) %>%
+  set_colnames(c("otu_name","label","count")) %>% 
+  group_by(label) %>% 
+  mutate(rel_abun = count/sum(count)) %>% 
+  arrange(otu_name, label) %>% 
+  filter(count > 0)
+```
+
+Let's check the number of counts per sample:
+```{r}
+ms174_readsXsample <- ms174_summary %>%
+  group_by(label) %>%
+  summarise(counts = sum(count))
+summary(ms174_readsXsample$counts)
+```
+
+We we will explore the amount of **absolute singletons** and **abundant singletons** where, **absolute singletons** are those sequences which are only **one time present** in **one sample**, while the **abundant singletons** are those singletons (occurring only one time per sample) that have been observed in more samples and are quite abundant. The absolute singletons most probably are sequencing errors, although in our example is difficult to say due the low number of samples.
+
+
+```{r}
+ms174_prevalence <- ms174_summary %>% 
+  select(otu_name, count) %>% 
+  group_by(otu_name) %>% 
+  summarise(prev = sum(count >0), total_counts = sum(count)) 
+
+ms174_abs_singletons <- ms174_prevalence %>% 
+  dplyr::filter(total_counts <= 1, prev <= 1)
+
+ms174_abun_singletons <- ms174_prevalence %>% 
+  dplyr::filter(total_counts > 1, prev <= 1)
+
+ms174_abs_singletons_names <- ms174_abs_singletons$otu_name
+
+ms174_abun_doubletons <- ms174_prevalence %>% 
+  filter(!(otu_name %in% ms174_abs_singletons_names)) %>% 
+  dplyr::filter( prev <= 2)
+
+# Remove absolute singletons
+ms174_prevalence <- ms174_prevalence %>% 
+  filter(!(otu_name %in% ms174_abs_singletons_names))
+```
+
+
+```{r fig.width=6, fig.height=4}
+ms174_counts <- data.frame(class = c("Total OTUs","Absolute singletons", "Abundant singletons"), 
+                           counts = c(length(unique(ms174_summary$otu_name)),
+                                      dim(ms174_abs_singletons)[1], 
+                                      dim(ms174_abun_singletons)[1]))
+
+print(ms174_counts)
+
+ms174_counts$class <- factor(ms174_counts$class, levels=c("Total OTUs","Absolute singletons", "Abundant singletons"))
+
+ggplot(ms174_counts, aes(class, counts)) +
+  geom_bar(stat = "identity") + theme_bw() +
+  xlab("") + ylab("# OTUs")
+
+```
+
+We have a  high number of **absolute singletons** that we will remove. The reason of this high number of singletons is not clear, but we should review the read merging and quality filtering process.
+
+### OTU prevalence
+
+Next step is to analyse the prevalence of the remaining OTUs. The idea is to keep the OTUs that at least appear in a certain number of samples. In this tutorial we will apply a strict filtering (OTUs should be present in at least 50% of the samples) to reduce the number of OTUs. In a real life analysis this should be careful examined. The following plots will help to choose the best threshold:
+
+```{r}
+ms174_prevalence_dist <- lapply(seq(0.00,0.60,0.15), function (X) {
+  ms174_prevalence %>% 
+    filter(prev >= nsamples(ms174_physeq) * X) %>%
+    summarise(N=n()) %>% mutate(N = N, prev=paste(100*X, "%", sep = ""), nsamples = round(nsamples(ms174_physeq) * X))
+}) %>% bind_rows()
+
+ms174_prevalence_dist$prev <- factor(ms174_prevalence_dist$prev , levels=paste(100*seq(0.00,0.60,0.15), "%", sep = ""))
+
+ggplot(ms174_prevalence_dist, aes(prev, N, group=1)) +
+  geom_line() +
+  geom_point() + 
+  theme_bw() +
+  xlab("Prevalence") + ylab("# OTUs")
+```
+
+In the plot we can see how the number of OTUs decreases as they occur in more sample. We will choose those OTUs that at least occur in 4 samples.
+
+```{r}
+ms174_prevalence_filt <- ms174_prevalence %>% 
+  filter(prev >= nsamples(ms174_physeq) * 0.50)
+
+summary(ms174_prevalence_filt$prev)
+
+ms174_physeq_filt_prev <- prune_taxa(ms174_prevalence_filt %>% .$otu_name %>% as.vector, ms174_physeq)
+ms174_physeq_filt_prev
+```
+
+We kept 303 OTUs from the original 27,267 OTUs. 
+
+We explore the counts for each sample after the filtering and remove two smples with less than 10,000 counts
+
+
+```{r}
+ms174_readsXsample <- sample_sums(ms174_physeq_filt_prev)
+summary(ms174_readsXsample )
+
+ggplot(as.data.frame(ms174_readsXsample) %>% mutate(read_counts = ms174_readsXsample, label = row.names(.)), aes(label, read_counts)) +
+  geom_bar(stat = "identity") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+```
+
+
+# Normalization
+From [McMurdie et al. 2014](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003531):
+
+> many microbiome samples are sequenced at the same time on the same DNA sequencing machine, but often result in total numbers of sequences per sample that are vastly different. The common procedure for addressing this difference in sequencing effort across samples – different library sizes – is to either (1) base analyses on the proportional abundance of each species in a library, or (2) rarefy, throw away sequences from the larger libraries so that all have the same, smallest size. We show that both of these normalization methods can work when comparing obviously-different whole microbiomes, but that neither method works well when comparing the relative proportions of each bacterial species across microbiome samples.
+
+Here we will rarefy our data set to a common sequencing depth and the [Cumulative Sum Scaling (CSS)](http://www.nature.com/nmeth/journal/v10/n12/full/nmeth.2658.html) as implemented on the [metagenomeSEQ](https://bioconductor.org/packages/release/bioc/html/metagenomeSeq.html) package 
+
+
+First we will rarefy our table using the *phyloseq* function **rarefy_even_depth()** and we also will calculate the proportional abundances using the *phyloseq* function **transform_sample_counts**:
+
+```{r}
+ms174_physeq_rar <- rarefy_even_depth(ms174_physeq_filt_prev)
+
+ms174_physeq_rar_prop <- transform_sample_counts(ms174_physeq_rar, function(x) x/sum(x))
+
+ms174_filt_prev_prop <- transform_sample_counts(ms174_physeq_filt_prev, function(x) x/sum(x))
+```
+
+Now we will learn how to transform our data using the CSS transformation, for this we will create our own function:
+
+<sup>**Note**: Rows correspond to OTUs and columns to samples.</sup>
+
+```{r}
+library(metagenomeSeq)
+
+cssTrans<-function(f.physeq.p = f.physeq.p, norm = norm, log = log){
+  if (taxa_are_rows(f.physeq.p)){
+    OTU <- as((otu_table(f.physeq.p)), "matrix")
+  }else{
+    OTU <- as(t(otu_table(f.physeq.p)), "matrix")
+  }
+  MGS <- newMRexperiment(
+    counts = (OTU)
+  )
+  MGS <- cumNorm(MGS, p = cumNormStat(MGS))
+  f.norm.p <- f.physeq.p
+  otu_table(f.norm.p) <- otu_table((as.matrix(MRcounts(
+    MGS, 
+    norm = norm,
+    log = log,
+    sl = median(unlist(normFactors(MGS)))
+  ))), taxa_are_rows = T)
+  return(f.norm.p)
+}
+
+ms174_physeq_css <- ms174_physeq_filt_prev
+ms174_physeq_css <- cssTrans(ms174_physeq_filt_prev, norm = T, log = F)
+ms174_physeq_css_prop <- transform_sample_counts(ms174_physeq_css, function(x) x/sum(x))
+ms174_physeq_css <- cssTrans(ms174_physeq_filt_prev, norm = T, log = T)
+```
+
+# Occurrence
+
+In this section we will explore the occurrence of the OTUs and we will identify the ones which ones are endemic or ubiquitous
+
+```{r}
+ntaxa(ms174_physeq_filt_prev) 
+
+abd <- otu_table(ms174_physeq_filt_prev) %>% 
+  as.data.frame() %>%
+  mutate(otu_name = row.names(.)) %>%
+  gather(otu_name, count) %>%
+  magrittr::set_colnames(c("otu_id","label","count")) %>%
+  filter(count > 0)
+
+abd_site <- abd %>%
+  group_by(otu_id, label) %>% 
+  summarise_each(funs(sum))
+
+abd_numb <- abd_site %>% 
+  dplyr::select(otu_id) %>% 
+  group_by(otu_id) %>% 
+  dplyr::summarise(N=n())
+
+abd_abund <- abd_site %>% 
+  select(otu_id, count) %>% 
+  group_by(otu_id) %>% 
+  summarise_each(funs(mean))
+
+abundxsample <- abd_numb %>% 
+  left_join(abd_abund) %>%
+  dplyr::mutate(distr = ifelse( N < 5 & count >= 100, "endemic", 
+                                ifelse( N > 6 & count >= 100, "ubiquitous" ,"NA"))) 
+
+abundxsample$distr <- factor(abundxsample$distr, levels=c("endemic", "ubiquitous", "NA"),
+                             labels=c("Endemic", "Ubiquitous", "NA")) 
+
+u <- ggplot(abundxsample, aes(N, count)) 
+u + geom_point(aes(color=distr), size=1) + theme_bw() + 
+  scale_color_manual(values=c( "#CC0000","#009900","#000000"), breaks=c("Endemic","Ubiquitous")) + 
+  scale_y_sqrt() + 
+  xlab("Number of sites") + 
+  ylab("Mean abundance") + 
+  ggtitle("OSD2014 18S OTUs distribution") + 
+  guides(colour = guide_legend(override.aes = list(size=2))) +
+  theme(plot.title = element_text(size = 14, face = "bold"),
+        legend.position="right",
+        legend.title=element_blank(), 
+        legend.key=element_blank(),
+        legend.background = element_rect(fill=alpha('white', 0.4)),
+        axis.title=element_text(size=12),
+        legend.text=element_text(size=12),
+        legend.text.align=0)
+
+ms174_physeq_df <- as.data.frame(otu_table(ms174_physeq_filt_prev))
+```
+
+We defined as endemic OTUs the ones observed in less than 20% of the samples (11) and with an abundance (counts) larger than 50. Ubiquitous are those observed in more than 80% of the samples
+
+
+The results are quite interesting and fitting our other analyses where we see a large heterogeneity in the OSD2014 coastal sites. Few OTUs are ubiquitous and they are not too abundant.   
+
+Endemic organisms
+
+Note: I am not an expert in Eukaryotic taxonomic, I just selected the level where I saw the Diatoms
+
+```{r}
+empty_as_na <- function(x){
+  if("factor" %in% class(x)) x <- as.character(x) ## since ifelse wont work with factors
+  ifelse(as.character(x)!="", x, NA)
+}
+
+tax_table(ms174_physeq_filt_prev)[abundxsample %>% 
+                       filter(distr ==  "Endemic") %>% 
+                       .$otu_id,] %>%
+  as.data.frame() %>%
+  select(phylum) %>%
+  ggplot(aes(phylum)) + 
+  geom_bar() + 
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
+  xlab("") + ggtitle("Endemic taxa")
+```
+
+Endemic organisms
+
+
+```{r}
+tax_table(ms174_physeq_filt_prev)[abundxsample %>% 
+                       filter(distr ==  "Ubiquitous") %>% 
+                       .$otu_id,] %>%
+  as.data.frame() %>%
+  select(class) %>%
+  ggplot(aes(class)) + 
+  geom_bar() + 
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
+  xlab("") + ggtitle("Ubiquitous taxa")
+```
+
+# Alpha diversity
+
+Knowing how many different types of organims are present in a sample (diversity) and how they are distributed (eveness) is one of the questions that microbial ecologists want to resolve. There are many different approaches to calculate the diversity indices. In this section we will use the package iNEXT ([Chao et al. 2014](http://onlinelibrary.wiley.com/doi/10.1890/13-0133.1/abstract); [Hsieh et al. 2016](http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12613/abstract)) for the rarefaction (interpolation) and prediction (extrapolation) of alpha diversity using Hill numbers:
+- richness (q = 0)
+- exponential Shannon entropy (q = 1)
+- inverse Simpson concentration (q = 2) 
+
+Hill numbers represent diversity metrics as total effective species as weighted by sensitivity to rare taxa with value ‘q’ (richness the most sensitive to rare taxa and Simpson the least). 
+
+
+First we will install iNext from CRAN:
+
+```{r eval=FALSE}
+install.packages("iNEXT")
+library(iNEXT)
+```
+
+
+```{r}
+ms174_df_subset <- as.data.frame(otu_table(ms174_physeq_filt_prev)[sample(1:303, 50),])
+ms174_alpha <- iNEXT(ms174_df_subset, q=c(0, 1, 2), datatype="abundance", nboot=10)
+```
+
+Let's have a look to the results. We will get three objects:
+
+- **DataInfo**: for summarizing data information
+- **iNextEst**: for showing diversity estimates for rarefied and extrapolated samples along with related statistics
+- **AsyEst**: for showing asymptotic diversity estimates along with related statistics
+
+```{r}
+ms174_alpha
+```
+
+And we can plot the interpolation and extrapolation of the thre Hill numbers with the function **ggiNEXT**:
+
+```{r}
+ggiNEXT(ms174_alpha, facet.var="order")
+```
+
+
+We also can plot the estimates using ggplot:
+
+```{r}
+ms174_alpha_asyEst <- ms174_alpha$AsyEst
+
+ggplot(ms174_alpha_asyEst, aes(x = Site, y = Estimator, color = Diversity)) +
+  geom_point(position = position_dodge(width = 0.1), stat = "identity") +
+  geom_errorbar(position = position_dodge(width = 0.1), width = 0.5, aes(ymin = Estimator - s.e., ymax = Estimator + s.e.), width = 0.2, size = 0.5) +
+  coord_flip() +
+  theme_bw() +
+  guides(color = F) + 
+  theme(legend.position="right") +
+  xlab("") + 
+  ylab("Diversity estimates") + 
+  facet_grid(Diversity~.)
+```
+
+
+
+
+```{r}
+sessionInfo()
+```

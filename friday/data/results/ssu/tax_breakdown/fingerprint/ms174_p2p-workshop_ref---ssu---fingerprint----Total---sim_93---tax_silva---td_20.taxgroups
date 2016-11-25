@@ -1,0 +1,369 @@
+1	Verrucomicrobiaceae
+2	Rubritaleaceae
+3	Puniceicoccaceae
+4	Unknown Family
+5	Acholeplasmataceae
+6	Unknown Family
+7	Spirochaetaceae
+8	Brevinemataceae
+9	Unknown Family
+10	Xanthomonadales Incertae Sedis
+11	Xanthomonadaceae
+12	Solimonadaceae
+13	Nevskiaceae
+14	Algiphilaceae
+15	Vibrionaceae
+16	Thiotrichales Incertae Sedis
+17	Thiotrichaceae
+18	Piscirickettsiaceae
+19	Francisellaceae
+20	Salinisphaeraceae
+21	Pseudomonadaceae
+22	Moraxellaceae
+23	Pasteurellaceae
+24	Oleiphilaceae
+25	Oceanospirillales Incertae Sedis
+26	Oceanospirillaceae
+27	Litoricolaceae
+28	Halomonadaceae
+29	Hahellaceae
+30	Alcanivoracaceae
+31	Methylococcaceae
+32	Legionellaceae
+33	Coxiellaceae
+34	Unknown Family
+35	Enterobacteriaceae
+36	Granulosicoccaceae
+37	Ectothiorhodospiraceae
+38	Chromatiaceae
+39	Spongiibacteraceae
+40	Porticoccaceae
+41	Halieaceae
+42	Cellvibrionaceae
+43	Cardiobacteriaceae
+44	Arenicellaceae
+45	Shewanellaceae
+46	Psychromonadaceae
+47	Pseudoalteromonadaceae
+48	Idiomarinaceae
+49	Ferrimonadaceae
+50	Colwelliaceae
+51	Celerinatantimonadaceae
+52	Alteromonadaceae
+53	Aeromonadaceae
+54	Acidiferrobacteraceae
+55	Helicobacteraceae
+56	Campylobacteraceae
+57	Syntrophobacteraceae
+58	Syntrophaceae
+59	Oligoflexaceae
+60	Sandaracinaceae
+61	Phaselicystidaceae
+62	Nannocystaceae
+63	Haliangiaceae
+64	Geobacteraceae
+65	Desulfuromonadaceae
+66	Desulfurellaceae
+67	Desulfovibrionaceae
+68	Desulfobulbaceae
+69	Desulfobacteraceae
+70	Desulfarculaceae
+71	Bdellovibrionaceae
+72	Bacteriovoracaceae
+73	Rhodocyclaceae
+74	Nitrosomonadaceae
+75	Neisseriaceae
+76	Methylophilaceae
+77	Hydrogenophilaceae
+78	Oxalobacteraceae
+79	Comamonadaceae
+80	Burkholderiaceae
+81	Alcaligenaceae
+82	Sphingomonadaceae
+83	Erythrobacteraceae
+84	Sneathiellaceae
+85	Surface 1
+86	SAR116 clade
+87	Rickettsiales Incertae Sedis
+88	Rickettsiaceae
+89	Holosporaceae
+90	Rhodospirillales Incertae Sedis
+91	Rhodospirillaceae
+92	Acetobacteraceae
+93	Rhodobacteraceae
+94	Rhodobiaceae
+95	Rhizobiaceae
+96	Phyllobacteriaceae
+97	Methylobacteriaceae
+98	Hyphomicrobiaceae
+99	Brucellaceae
+100	Bradyrhizobiaceae
+101	Beijerinckiaceae
+102	Aurantimonadaceae
+103	Parvularculaceae
+104	Kordiimonadaceae
+105	Hyphomonadaceae
+106	Caulobacteraceae
+107	Unknown Family
+108	Planctomycetaceae
+109	Brocadiaceae
+110	Phycisphaeraceae
+111	Unknown Family
+112	Nitrospiraceae
+113	Nitrospinaceae
+114	Lentisphaeraceae
+115	Unknown Family
+116	Gemmatimonadaceae
+117	Fusobacteriaceae
+118	Veillonellaceae
+119	Erysipelotrichaceae
+120	Peptostreptococcaceae
+121	Peptococcaceae
+122	Clostridiaceae 1
+123	Streptococcaceae
+124	Leuconostocaceae
+125	Carnobacteriaceae
+126	Staphylococcaceae
+127	Planococcaceae
+128	Bacillaceae
+129	Fibrobacteraceae
+130	Trueperaceae
+131	Deinococcaceae
+132	Unknown Family
+133	FamilyII
+134	FamilyI
+135	FamilyI
+136	Caldilineaceae
+137	Anaerolineaceae
+138	Chlorobiaceae
+139	Simkaniaceae
+140	Parachlamydiaceae
+141	Chlamydiaceae
+142	Saprospiraceae
+143	Chitinophagaceae
+144	Schleiferiaceae
+145	Flavobacteriaceae
+146	Cryomorphaceae
+147	Flammeovirgaceae
+148	Cytophagaceae
+149	Cyclobacteriaceae
+150	Draconibacteriaceae
+151	Rikenellaceae
+152	Prolixibacteraceae
+153	Marinilabiaceae
+154	Unknown Family
+155	Rhodothermaceae
+156	Euzebyaceae
+157	Coriobacteriaceae
+158	Streptomycetaceae
+159	Sanguibacteraceae
+160	Micrococcaceae
+161	Microbacteriaceae
+162	Intrasporangiaceae
+163	Cellulomonadaceae
+164	Nocardiaceae
+165	Dietziaceae
+166	OM1 clade
+167	Acidimicrobiaceae
+168	Solibacteraceae (Subgroup 3)
+169	Acanthopleuribacteraceae
+170	Blastocatellaceae (Subgroup 4)
+171	Unknown Family
+172	Unknown Family
+173	Halobacteriaceae
+174	Verrucomicrobiales
+175	Puniceicoccales
+176	Unknown Order
+177	Acholeplasmatales
+178	Unknown Order
+179	Spirochaetales
+180	Unknown Order
+181	Xanthomonadales
+182	Vibrionales
+183	Thiotrichales
+184	Salinisphaerales
+185	Pseudomonadales
+186	Pasteurellales
+187	Oceanospirillales
+188	Methylococcales
+189	Legionellales
+190	Gammaproteobacteria Incertae Sedis
+191	Enterobacteriales
+192	Chromatiales
+193	Cellvibrionales
+194	Cardiobacteriales
+195	Arenicellales
+196	Alteromonadales
+197	Aeromonadales
+198	Acidithiobacillales
+199	Acidiferrobacterales
+200	Campylobacterales
+201	Syntrophobacterales
+202	Oligoflexales
+203	Myxococcales
+204	Desulfuromonadales
+205	Desulfurellales
+206	Desulfovibrionales
+207	Desulfobacterales
+208	Desulfarculales
+209	Bdellovibrionales
+210	Rhodocyclales
+211	Nitrosomonadales
+212	Neisseriales
+213	Methylophilales
+214	Hydrogenophilales
+215	Burkholderiales
+216	Sphingomonadales
+217	Sneathiellales
+218	SAR11 clade
+219	Rickettsiales
+220	Rhodospirillales
+221	Rhodobacterales
+222	Rhizobiales
+223	Parvularculales
+224	Kordiimonadales
+225	Caulobacterales
+226	Alphaproteobacteria Incertae Sedis
+227	Planctomycetales
+228	Brocadiales
+229	Phycisphaerales
+230	Unknown Order
+231	Nitrospirales
+232	Nitrospinales
+233	Victivallales
+234	Lentisphaerales
+235	Unknown Order
+236	Ignavibacteriales
+237	Gemmatimonadales
+238	Fusobacteriales
+239	Selenomonadales
+240	Erysipelotrichales
+241	Halanaerobiales
+242	Clostridiales
+243	Lactobacillales
+244	Bacillales
+245	Fibrobacterales
+246	Deinococcales
+247	Unknown Order
+248	SubsectionIV
+249	SubsectionIII
+250	SubsectionI
+251	Caldilineales
+252	Anaerolineales
+253	Chlorobiales
+254	Chlamydiales
+255	Sphingobacteriales
+256	Flavobacteriales
+257	Cytophagales
+258	Bacteroidia Incertae Sedis
+259	Bacteroidales
+260	Order III
+261	Order II
+262	Fimbriimonadales
+263	Solirubrobacterales
+264	Euzebyales
+265	Coriobacteriales
+266	Streptomycetales
+267	Micrococcales
+268	Corynebacteriales
+269	Acidimicrobiales
+270	Solibacterales
+271	Subgroup 10
+272	Acanthopleuribacterales
+273	Blastocatellales
+274	Unknown Order
+275	Unknown Order
+276	Thermoplasmatales
+277	Halobacteriales
+278	Verrucomicrobiae
+279	Opitutae
+280	OPB35 soil group
+281	Mollicutes
+282	Tectomicrobia Incertae Sedis
+283	Spirochaetes
+284	Proteobacteria Incertae Sedis
+285	Gammaproteobacteria
+286	Epsilonproteobacteria
+287	Deltaproteobacteria
+288	Betaproteobacteria
+289	Alphaproteobacteria
+290	Planctomycetacia
+291	Phycisphaerae
+292	Omnitrophica Incertae Sedis
+293	Nitrospira
+294	Nitrospinia
+295	Oligosphaeria
+296	Lentisphaeria
+297	Latescibacteria Incertae Sedis
+298	Ignavibacteria
+299	Gemmatimonadetes
+300	Fusobacteriia
+301	Negativicutes
+302	Erysipelotrichia
+303	Clostridia
+304	Bacilli
+305	Fibrobacteria
+306	Chitinivibrionia
+307	Elusimicrobia
+308	Deinococci
+309	Deferribacteres Incertae Sedis
+310	Melainabacteria
+311	Cyanobacteria
+312	Caldilineae
+313	Ardenticatenia
+314	Anaerolineae
+315	Chlorobia
+316	Chlamydiae
+317	Sphingobacteriia
+318	Flavobacteriia
+319	Cytophagia
+320	Bacteroidia
+321	Bacteroidetes Incertae Sedis
+322	Fimbriimonadia
+323	Thermoleophilia
+324	Nitriliruptoria
+325	Coriobacteriia
+326	Actinobacteria
+327	Acidimicrobiia
+328	Solibacteres
+329	Holophagae
+330	Blastocatellia
+331	Unknown Class
+332	Marine Group I
+333	Thermoplasmata
+334	Halobacteria
+335	Verrucomicrobia
+336	Tenericutes
+337	Tectomicrobia
+338	Spirochaetae
+339	Proteobacteria
+340	Planctomycetes
+341	Parcubacteria
+342	Omnitrophica
+343	Nitrospirae
+344	Nitrospinae
+345	Microgenomates
+346	Lentisphaerae
+347	Latescibacteria
+348	Ignavibacteriae
+349	Gemmatimonadetes
+350	Fusobacteria
+351	Firmicutes
+352	Fibrobacteres
+353	Elusimicrobia
+354	Deinococcus-Thermus
+355	Deferribacteres
+356	Cyanobacteria
+357	Chloroflexi
+358	Chlorobi
+359	Chlamydiae
+360	Bacteroidetes
+361	Armatimonadetes
+362	Actinobacteria
+363	Acidobacteria
+364	Acetothermia
+365	WSA2
+366	Thaumarchaeota
+367	Euryarchaeota
+368	Aenigmarchaeota
+369	Bacteria

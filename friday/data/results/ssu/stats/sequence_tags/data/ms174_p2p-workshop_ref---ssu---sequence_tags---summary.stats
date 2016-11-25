@@ -1,0 +1,12 @@
+	OSD188_6_14_RI	OSD189_6_14_YNG	OSD190_6_14_KI	OSD191_6_14_DRW	OSD31_6_14_PH	OSD32_6_14_NSI	OSD33_6_14_MI
+auto-aligned-rejected	0	0	0	0	0	0	0
+bad alignment identity	1	5	1	5	3	2	1
+bad alignment quality	3	1	4	4	3	1	0
+bad base pair score	0	0	0	0	0	0	0
+ambiguous	1015	1090	918	973	901	741	530
+homopolymer	19	38	24	25	30	20	23
+bad quality	16	11	13	8	8	12	9
+bad length	0	0	0	0	0	0	0
+replicate	10883	13968	11038	10800	11256	12287	8066
+clustered	9172	10149	7856	7853	8362	9434	6072
+classified	5033	4536	3781	5176	4355	4385	3323

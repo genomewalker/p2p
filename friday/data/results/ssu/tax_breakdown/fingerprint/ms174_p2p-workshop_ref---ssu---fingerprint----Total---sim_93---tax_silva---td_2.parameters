@@ -1,0 +1,5 @@
+options used to create the qfingerprint plot. Options specified on the command
+line overwrite those given in section taxplot.
+
+
+

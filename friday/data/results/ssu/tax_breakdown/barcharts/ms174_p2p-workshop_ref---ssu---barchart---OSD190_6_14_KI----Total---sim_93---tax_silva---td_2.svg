@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="utf-8"  standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg 
+ viewBox="0 0 800 600"
+ xmlns="http://www.w3.org/2000/svg"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+
+<title>Gnuplot</title>
+<desc>Produced by GNUPLOT 4.6 patchlevel 6 </desc>
+
+<g id="gnuplot_canvas">
+
+<rect x="0" y="0" width="800" height="600" fill="#ffffff"/>
+<defs>
+
+	<circle id='gpDot' r='0.5' stroke-width='0.5'/>
+	<path id='gpPt0' stroke-width='0.267' stroke='currentColor' d='M-1,0 h2 M0,-1 v2'/>
+	<path id='gpPt1' stroke-width='0.267' stroke='currentColor' d='M-1,-1 L1,1 M1,-1 L-1,1'/>
+	<path id='gpPt2' stroke-width='0.267' stroke='currentColor' d='M-1,0 L1,0 M0,-1 L0,1 M-1,-1 L1,1 M-1,1 L1,-1'/>
+	<rect id='gpPt3' stroke-width='0.267' stroke='currentColor' x='-1' y='-1' width='2' height='2'/>
+	<rect id='gpPt4' stroke-width='0.267' stroke='currentColor' fill='currentColor' x='-1' y='-1' width='2' height='2'/>
+	<circle id='gpPt5' stroke-width='0.267' stroke='currentColor' cx='0' cy='0' r='1'/>
+	<use xlink:href='#gpPt5' id='gpPt6' fill='currentColor' stroke='none'/>
+	<path id='gpPt7' stroke-width='0.267' stroke='currentColor' d='M0,-1.33 L-1.33,0.67 L1.33,0.67 z'/>
+	<use xlink:href='#gpPt7' id='gpPt8' fill='currentColor' stroke='none'/>
+	<use xlink:href='#gpPt7' id='gpPt9' stroke='currentColor' transform='rotate(180)'/>
+	<use xlink:href='#gpPt9' id='gpPt10' fill='currentColor' stroke='none'/>
+	<use xlink:href='#gpPt3' id='gpPt11' stroke='currentColor' transform='rotate(45)'/>
+	<use xlink:href='#gpPt11' id='gpPt12' fill='currentColor' stroke='none'/>
+	<filter id='greybox' filterUnits='objectBoundingBox' x='0' y='0' height='1' width='1'>
+	  <feFlood flood-color='lightgrey' flood-opacity='1' result='grey'/>
+	  <feComposite in='SourceGraphic' in2='grey' operator='atop'/>
+	</filter>
+</defs>
+<g style="fill:none; color:#FFFFFF; stroke:currentColor; stroke-width:2.00; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:#FFFFFF; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M67.5,423.5 L778.9,423.5  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M67.5,423.5 L75.0,423.5  '/>	<g transform="translate(60.5,427.2)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:end">
+		<text> 0</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M67.5,381.5 L778.9,381.5  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M67.5,381.5 L75.0,381.5  '/>	<g transform="translate(60.5,385.2)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:end">
+		<text> 1000</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M67.5,339.4 L778.9,339.4  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M67.5,339.4 L75.0,339.4  '/>	<g transform="translate(60.5,343.1)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:end">
+		<text> 2000</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M67.5,297.4 L778.9,297.4  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M67.5,297.4 L75.0,297.4  '/>	<g transform="translate(60.5,301.1)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:end">
+		<text> 3000</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M67.5,255.3 L778.9,255.3  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M67.5,255.3 L75.0,255.3  '/>	<g transform="translate(60.5,259.0)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:end">
+		<text> 4000</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M67.5,213.3 L778.9,213.3  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M67.5,213.3 L75.0,213.3  '/>	<g transform="translate(60.5,217.0)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:end">
+		<text> 5000</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M67.5,171.2 L778.9,171.2  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M67.5,171.2 L75.0,171.2  '/>	<g transform="translate(60.5,174.9)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:end">
+		<text> 6000</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M67.5,129.2 L778.9,129.2  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M67.5,129.2 L75.0,129.2  '/>	<g transform="translate(60.5,132.9)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:end">
+		<text> 7000</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M67.5,87.1 L778.9,87.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M67.5,87.1 L75.0,87.1  '/>	<g transform="translate(60.5,90.8)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:end">
+		<text> 8000</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M67.5,45.1 L778.9,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M67.5,45.1 L75.0,45.1  '/>	<g transform="translate(60.5,48.8)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:end">
+		<text> 9000</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M92.0,423.5 L92.0,52.6 L92.0,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M92.0,423.5  '/>	<g transform="translate(87.3,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Bathyarchaeota</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M116.6,423.5 L116.6,52.6 L116.6,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M116.6,423.5  '/>	<g transform="translate(111.9,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Euryarchaeota</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M141.1,423.5 L141.1,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M141.1,423.5  '/>	<g transform="translate(136.4,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Thaumarchaeota</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M165.6,423.5 L165.6,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M165.6,423.5  '/>	<g transform="translate(160.9,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Woesearchaeota (DHVEG-6)</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M190.2,423.5 L190.2,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M190.2,423.5  '/>	<g transform="translate(185.5,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Acidobacteria</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M214.7,423.5 L214.7,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M214.7,423.5  '/>	<g transform="translate(210.0,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Actinobacteria</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M239.2,423.5 L239.2,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M239.2,423.5  '/>	<g transform="translate(234.5,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Bacteroidetes</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M263.7,423.5 L263.7,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M263.7,423.5  '/>	<g transform="translate(259.0,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Chlamydiae</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M288.3,423.5 L288.3,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M288.3,423.5  '/>	<g transform="translate(283.6,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Chlorobi</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M312.8,423.5 L312.8,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M312.8,423.5  '/>	<g transform="translate(308.1,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Chloroflexi</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M337.3,423.5 L337.3,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M337.3,423.5  '/>	<g transform="translate(332.6,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Cyanobacteria</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M361.9,423.5 L361.9,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M361.9,423.5  '/>	<g transform="translate(357.2,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Elusimicrobia</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M386.4,423.5 L386.4,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M386.4,423.5  '/>	<g transform="translate(381.7,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Fibrobacteres</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M410.9,423.5 L410.9,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M410.9,423.5  '/>	<g transform="translate(406.2,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Firmicutes</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M435.5,423.5 L435.5,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M435.5,423.5  '/>	<g transform="translate(430.8,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Fusobacteria</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M460.0,423.5 L460.0,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M460.0,423.5  '/>	<g transform="translate(455.3,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Gemmatimonadetes</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M484.5,423.5 L484.5,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M484.5,423.5  '/>	<g transform="translate(479.8,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Lentisphaerae</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M509.1,423.5 L509.1,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M509.1,423.5  '/>	<g transform="translate(504.4,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Marinimicrobia (SAR406 clade)</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M533.6,423.5 L533.6,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M533.6,423.5  '/>	<g transform="translate(528.9,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Nitrospinae</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M558.1,423.5 L558.1,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M558.1,423.5  '/>	<g transform="translate(553.4,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Omnitrophica</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M582.7,423.5 L582.7,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M582.7,423.5  '/>	<g transform="translate(578.0,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>PAUC34f</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M607.2,423.5 L607.2,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M607.2,423.5  '/>	<g transform="translate(602.5,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Parcubacteria</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M631.7,423.5 L631.7,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M631.7,423.5  '/>	<g transform="translate(627.0,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Planctomycetes</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M656.2,423.5 L656.2,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M656.2,423.5  '/>	<g transform="translate(651.5,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Poribacteria</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M680.8,423.5 L680.8,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M680.8,423.5  '/>	<g transform="translate(676.1,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Proteobacteria</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M705.3,423.5 L705.3,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M705.3,423.5  '/>	<g transform="translate(700.6,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>SBR1093</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M729.8,423.5 L729.8,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M729.8,423.5  '/>	<g transform="translate(725.1,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Tectomicrobia</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M754.4,423.5 L754.4,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M754.4,423.5  '/>	<g transform="translate(749.7,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>Verrucomicrobia</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:rgb(128, 128, 128); stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:0.66; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(176, 176, 176)' stroke-dasharray=' 2,4' class="gridline"  d='M778.9,423.5 L778.9,45.1  '/></g>
+<g style="fill:none; color:gray; stroke:rgb(176, 176, 176); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(128, 128, 128)'  d='M778.9,423.5  '/>	<g transform="translate(774.2,434.2) rotate(45)" style="stroke:none; fill:rgb(128,128,128); font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:start">
+		<text>No Relative</text>
+	</g>
+	<path stroke='rgb(128, 128, 128)'  d='M67.5,45.1 L67.5,423.5 L778.9,423.5 M778.9,45.1 M67.5,45.1  '/>	<g transform="translate(14.7,234.3) rotate(270)" style="stroke:none; fill:black; font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:middle">
+		<text>Number of OTUs</text>
+	</g>
+</g>
+<g style="fill:none; color:black; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+	<g transform="translate(423.2,593.2)" style="stroke:none; fill:black; font-family:Arial; font-size:10.00pt; font-weight:bold; text-anchor:middle">
+		<text>Total number of sequences</text>
+	</g>
+	<g transform="translate(423.2,27.1)" style="stroke:none; fill:black; font-family:Arial Black; font-size:12.00pt; text-anchor:middle">
+		<text>MS174_P2P-workshop_ref: OSD190_6_14_KI</text>
+	</g>
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+	<g id="gnuplot_plot_1" ><title>gnuplot_plot_1</title>
+<g style="fill:none; color:#FFFFFF; stroke:rgb(128, 128, 128); stroke-width:4.00; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:red; stroke:currentColor; stroke-width:4.00; stroke-linecap:butt; stroke-linejoin:miter">
+	<path stroke='rgb(160,   0,   0)'  d='M92.0,423.5 M116.6,423.5 L116.6,345.3 M141.1,423.5 L141.1,394.9 M165.6,423.5 M190.2,423.5 L190.2,423.3 
+		M214.7,423.5 L214.7,384.9 M239.2,423.5 L239.2,279.1 M263.7,423.5 L263.7,423.4 M288.3,423.5 M312.8,423.5 
+		L312.8,419.0 M337.3,423.5 L337.3,212.4 M361.9,423.5 M386.4,423.5 M410.9,423.5 L410.9,423.3 M435.5,423.5 
+		M460.0,423.5 L460.0,422.6 M484.5,423.5 L484.5,423.2 M509.1,423.5 L509.1,360.5 M533.6,423.5 L533.6,423.3 
+		M558.1,423.5 L558.1,423.4 M582.7,423.5 L582.7,423.2 M607.2,423.5 M631.7,423.5 L631.7,415.4 M656.2,423.5 
+		M680.8,423.5 L680.8,86.3 M705.3,423.5 L705.3,421.7 M729.8,423.5 M754.4,423.5 L754.4,417.8 M778.9,423.5 
+		L778.9,394.1  '/></g>
+	</g>
+<g style="fill:none; color:#FFFFFF; stroke:rgb(160,   0,   0); stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:blue; stroke:currentColor; stroke-width:1.32; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+</g>
+</svg>
+

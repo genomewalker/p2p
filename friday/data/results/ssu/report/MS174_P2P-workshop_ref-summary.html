@@ -1,0 +1,88 @@
+<head>
+<style type="text/css">
+body {
+    color: black;
+    background-color: white;
+}
+#summary {
+    width: 100%;
+}
+#summary tbody td { 
+    text-align: right;
+    vertical-align: top;
+}
+#summary tbody td:first-child {
+    text-align: left
+}
+
+.sub_header {
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>               
+<table id="summary">
+<colgroup>
+    <!-- setting text-align in colgroup not supported -->
+    <col style="width:10em; background-color:lightgray">
+    <col style="width:6em;">
+    <col style="width:5em;">
+    <!-- 
+        the forth column is an empty place holder, otherwise the distance
+        between the absolute and relative numbers third and forth columns
+        would be rather large (project name and description spann three
+        columns and use the complete width of the table
+    -->
+    <col>
+</colgroup>
+<tr><th colspan="4">Project Summary</th></tr>
+<tr><td>Project Name:                       </td><td colspan="3" style="text-align:left;"> MS174 P2P-workshop ref       </td></tr>
+<tr><td>Project Description:                </td><td colspan="3" style="text-align:left;"> Default configuration </td></tr>
+<tr><td>Sequence Type:                      </td><td colspan="3" style="text-align:left;"> SSU       </td></tr>
+<tr><td>&nbsp;</td><td></td></tr>
+<tr><td>Number of Samples:                  </td><td> 7   </td></tr>
+<tr><td>Number of Sequences:                </td><td> 174243 </td></tr>
+<tr><td>Number of Rejected&nbsp;Sequences: </td><td> 6458  </td><td> (3.71%) </td></tr>
+<tr><td>&nbsp;</td><td></td></tr>
+
+<tr><td colspan="4" class="sub_header">Raw Sequence Information</td></tr>
+<tr><td>Min. Length: </td>                  <td> 248 </td></tr>
+<tr><td>Avg. Length: </td>                  <td> 253 </td></tr>
+<tr><td>Max. Length: </td>                  <td> 288 </td></tr>
+<tr><td>&nbsp;</td><td></td></tr>
+
+<tr><td colspan="4" class="sub_header">Aligned Sequence Information</td></tr>
+<tr><td>Min. Length: </td>                  <td> 248 </td></tr>    
+<tr><td>Avg. Length: </td>                  <td> 253 </td></tr>
+<tr><td>Max. Length: </td>                  <td> 288 </td></tr>
+<tr><td>&nbsp;</td><td></td></tr>
+
+<tr><td colspan="4" class="sub_header">Quality Information (rejected by)</td></tr>
+<tr><td>Alignment BP Score: </td>           <td> - </td></tr>
+<tr><td>Alignment Identity: </td>           <td> 18 </td></tr>
+<tr><td>Alignment Score: </td>              <td> 16 </td></tr>
+<tr><td>Ambiguous Bases: </td>              <td> 6168 </td></tr>    
+<tr><td>Homopolymers: </td>                 <td> 179 </td></tr>
+<tr><td>Quality: </td>                      <td> 77 </td></tr>
+<tr><td>Length: </td>                       <td> - </td></tr>
+<tr><td>&nbsp;</td><td></td></tr>
+
+<tr><td colspan="4" class="sub_header">Clustering Information   </td></tr>                                                                                                    
+<tr><td>Number of OTUs:                     </td><td> 30589       </td><td> (17.56%)    </td></tr>
+<tr><td>Number of Clustered&nbsp;Sequences: </td><td> 58898    </td><td> (33.80%) </td></tr>
+<tr><td>Number of Replicates:               </td><td> 78298     </td><td> (44.94%)  </td></tr>
+<tr><td>&nbsp;</td><td></td></tr>
+
+<tr><td colspan="4" class="sub_header">Classification Information </td></tr>
+<tr><td>Number of Classified&nbsp;Sequences:        </td><td class="align-right"> 163376   </td><td class="align-right"> (93.76%) </td></tr>
+<tr><td>Number of &laquo;No&nbsp;Relative&raquo;:   </td><td class="align-right"> 4409   </td><td class="align-right"> (2.53%) </td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td colspan="4" class="sub_header">Software Versions </td></tr>
+<tr><td>SILVAngs:                           </td><td colspan="3" style="text-align:left;"> 1.3   </td></tr>
+<tr><td>SINA:                               </td><td colspan="3" style="text-align:left;"> SINA v1.2.10 for ARB SVN (revision 21008)   </td></tr>
+<tr><td>CD-Hit:                             </td><td colspan="3" style="text-align:left;"> 3.1.2  </td></tr>
+<tr><td>BLAST:                              </td><td colspan="3" style="text-align:left;"> 2.2.30+  </td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+</table>
+</body>
