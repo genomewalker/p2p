@@ -1120,7 +1120,7 @@ ms174_physeq_css <- cssTrans(ms174_physeq_filt_prev, norm = T, log = T)
 
 # Occurrence
 
-In this section we will explore the occurrence of the OTUs and we will identify the ones which ones are endemic or ubiquitous
+In this section we will explore the occurrence of the OTUs and we will identify which ones are endemic or ubiquitous
 
 ```{r}
 ntaxa(ms174_physeq_filt_prev) 
