@@ -1,0 +1,477 @@
+---
+title: "P2P workshop: DADA2"
+author: "Antonio Fernandez-Guerra & Pelin Yilmaz"
+date: "11/10/2017"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# DADA2
+
+
+# Phyloseq
+
+The phyloseq package is a tool to import, store, analyze, and graphically display complex phylogenetic sequencing data that has already been clustered into Operational Taxonomic Units (OTUs), especially when there is associated sample data, phylogenetic tree, and/or taxonomic assignment of the OTUs. We will use the biom object we created to create a phyloseq object, more information [here](http://joey711.github.io/phyloseq/import-data.html). We will use three main methods:
+
+- **otu_table**: for constructing and accessing OTU abundance objects
+- **sample_data**: for constructing and accessing a table of sample-level variables
+- **tax_table**: for constructing and accessing a table of taxonomic names, organized with ranks as columns
+
+And we will combine them with **phyloseq**:
+
+```{r}
+library(phyloseq)
+
+otutable <- otu_table(as.matrix(biom_data(otuXsample_biom)), taxa_are_rows = TRUE) 
+sampletable <- sample_data(as.data.frame(data.matrix(sample_metadata(otuXsample_biom))))
+taxtable <- tax_table(as.matrix(observation_metadata(otuXsample_biom)))
+ms174_physeq <- phyloseq(otutable, sampletable, taxtable)
+ms174_physeq
+```
+
+Phyloseq provides many methods to access our data. For example let's get the names of the samples:
+
+```{r}
+sample_names(ms174_physeq)
+```
+
+Or the sample variable names:
+```{r}
+sample_variables(ms174_physeq)
+```
+
+Or the OTU names:
+```{r}
+taxa_names(ms174_physeq)[1:10]
+```
+
+We can subset data, for example let's keep only the OTUs from Bacteroidetes:
+```{r}
+ms174_physeq_bct = subset_taxa(ms174_physeq, phylum == "Bacteroidetes")
+ms174_physeq_bct
+```
+We can see that 3260 OTUs belong to the phylum Bacteroidetes.
+
+Phyloseq also provides really nice graphical capabilities based on ggplot2. For example with **plot_bar** we can plot the abundance of Bacteroidetes in each sample:
+
+```{r}
+plot_bar(ms174_physeq_bct)
+```
+
+And color the plot based in the order:
+```{r}
+plot_bar(ms174_physeq_bct, fill="order")
+```
+
+We can see that Flavobacteriales are the most abundant.
+
+
+Let's remove all Chloroplasts and Mitochondria OTUs:
+```{r}
+ms174_physeq <- subset_taxa(ms174_physeq, class !="Chloroplast" | family != "Mitochondria")
+ms174_physeq
+```
+
+Phyloseq also has methods to rarefy to even depth and estimate and calculate measures of alpha diversity:
+```{r}
+ms174_physeq_rar <- rarefy_even_depth(ms174_physeq)
+plot_bar(ms174_physeq_rar)
+plot_richness(ms174_physeq_rar, measures=c("Observed", "Shannon", "InvSimpson"))
+```
+
+And we even can perform ordinations. For example MDS with Euclidean distance and colored by temperature:
+```{r}
+ms174_physeq_even <- transform_sample_counts(ms174_physeq, function(x) 1E6 * x/sum(x))
+ms174_physeq_sum <- tapply(taxa_sums(ms174_physeq_even), tax_table(ms174_physeq_even)[, "phylum"], sum, na.rm=TRUE)
+top5phyla <- names(sort(ms174_physeq_sum, TRUE))[1:5]
+ms174_physeq_even <- prune_taxa((tax_table(ms174_physeq_even)[, "phylum"] %in% top5phyla), ms174_physeq_even)
+
+ms174_physeq_ord <- ordinate(ms174_physeq_even, "MDS", "euclidean")
+plot_ordination(ms174_physeq_even, ms174_physeq_ord, type="samples", color = "noaa_temperature")
+```
+
+<sup>**Note**: All the results shown here are just for demonstration and shouldn't be applied in real life analyses. For proper analytical workflow please visit the phyloseq [website](https://joey711.github.io/phyloseq/index.html)</sup>
+
+# Exploring the data
+
+Now we will use all what we learnt to explore our data set. First we will create a summary file where we will group the OTUs by sample, we will calculate the relative abundance of each OTU and we will remove those OTUs with 0 counts. 
+
+```{r}
+library(magrittr)
+ms174_summary <- otu_table(ms174_physeq) %>% 
+  as.data.frame() %>%
+  mutate(otu_name = row.names(.)) %>%
+  gather(otu_name, count) %>%
+  set_colnames(c("otu_name","label","count")) %>% 
+  group_by(label) %>% 
+  mutate(rel_abun = count/sum(count)) %>% 
+  arrange(otu_name, label) %>% 
+  filter(count > 0)
+```
+
+Let's check the number of counts per sample:
+```{r}
+ms174_readsXsample <- ms174_summary %>%
+  group_by(label) %>%
+  summarise(counts = sum(count))
+summary(ms174_readsXsample$counts)
+```
+
+We we will explore the amount of **absolute singletons** and **abundant singletons** where, **absolute singletons** are those sequences which are only **one time present** in **one sample**, while the **abundant singletons** are those singletons (occurring only one time per sample) that have been observed in more samples and are quite abundant. The absolute singletons most probably are sequencing errors, although in our example is difficult to say due the low number of samples.
+
+
+```{r}
+ms174_prevalence <- ms174_summary %>% 
+  select(otu_name, count) %>% 
+  group_by(otu_name) %>% 
+  summarise(prev = sum(count >0), total_counts = sum(count)) 
+
+ms174_abs_singletons <- ms174_prevalence %>% 
+  dplyr::filter(total_counts <= 1, prev <= 1)
+
+ms174_abun_singletons <- ms174_prevalence %>% 
+  dplyr::filter(total_counts > 1, prev <= 1)
+
+ms174_abs_singletons_names <- ms174_abs_singletons$otu_name
+
+ms174_abun_doubletons <- ms174_prevalence %>% 
+  filter(!(otu_name %in% ms174_abs_singletons_names)) %>% 
+  dplyr::filter( prev <= 2)
+
+# Remove absolute singletons
+ms174_prevalence <- ms174_prevalence %>% 
+  filter(!(otu_name %in% ms174_abs_singletons_names))
+```
+
+
+```{r}
+ms174_counts <- data.frame(class = c("Total OTUs","Absolute singletons", "Abundant singletons"), 
+                           counts = c(length(unique(ms174_summary$otu_name)),
+                                      dim(ms174_abs_singletons)[1], 
+                                      dim(ms174_abun_singletons)[1]))
+
+print(ms174_counts)
+
+ms174_counts$class <- factor(ms174_counts$class, levels=c("Total OTUs","Absolute singletons", "Abundant singletons"))
+
+ggplot(ms174_counts, aes(class, counts)) +
+  geom_bar(stat = "identity") + theme_bw() +
+  xlab("") + ylab("# OTUs")
+
+```
+
+We have a  high number of **absolute singletons** that we will remove. The reason of this high number of singletons is not clear, but we should review the read merging and quality filtering process.
+
+### OTU prevalence
+
+Next step is to analyse the prevalence of the remaining OTUs. The idea is to keep the OTUs that at least appear in a certain number of samples. In this tutorial we will apply a strict filtering (OTUs should be present in at least 50% of the samples) to reduce the number of OTUs. In a real life analysis this should be careful examined. The following plots will help to choose the best threshold:
+
+```{r}
+ms174_prevalence_dist <- lapply(seq(0.00,0.60,0.15), function (X) {
+  ms174_prevalence %>% 
+    filter(prev >= nsamples(ms174_physeq) * X) %>%
+    summarise(N=n()) %>% mutate(N = N, prev=paste(100*X, "%", sep = ""), nsamples = round(nsamples(ms174_physeq) * X))
+}) %>% bind_rows()
+
+ms174_prevalence_dist$prev <- factor(ms174_prevalence_dist$prev , levels=paste(100*seq(0.00,0.60,0.15), "%", sep = ""))
+
+ggplot(ms174_prevalence_dist, aes(prev, N, group=1)) +
+  geom_line() +
+  geom_point() + 
+  theme_bw() +
+  xlab("Prevalence") + ylab("# OTUs")
+```
+
+In the plot we can see how the number of OTUs decreases as they occur in more sample. We will choose those OTUs that at least occur in 4 samples.
+
+```{r}
+ms174_prevalence_filt <- ms174_prevalence %>% 
+  filter(prev >= nsamples(ms174_physeq) * 0.50)
+
+summary(ms174_prevalence_filt$prev)
+
+ms174_physeq_filt_prev <- prune_taxa(ms174_prevalence_filt %>% .$otu_name %>% as.vector, ms174_physeq)
+ms174_physeq_filt_prev
+```
+
+We kept 303 OTUs from the original 27,267 OTUs. 
+
+We explore the counts for each sample after the filtering:
+
+
+```{r}
+ms174_readsXsample <- sample_sums(ms174_physeq_filt_prev)
+summary(ms174_readsXsample )
+
+ggplot(as.data.frame(ms174_readsXsample) %>% mutate(read_counts = ms174_readsXsample, label = row.names(.)), aes(label, read_counts)) +
+  geom_bar(stat = "identity") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+```
+
+
+# Normalization
+From [McMurdie et al. 2014](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003531):
+
+> many microbiome samples are sequenced at the same time on the same DNA sequencing machine, but often result in total numbers of sequences per sample that are vastly different. The common procedure for addressing this difference in sequencing effort across samples – different library sizes – is to either (1) base analyses on the proportional abundance of each species in a library, or (2) rarefy, throw away sequences from the larger libraries so that all have the same, smallest size. We show that both of these normalization methods can work when comparing obviously-different whole microbiomes, but that neither method works well when comparing the relative proportions of each bacterial species across microbiome samples.
+
+Here we will rarefy our data set to a common sequencing depth and the [Cumulative Sum Scaling (CSS)](http://www.nature.com/nmeth/journal/v10/n12/full/nmeth.2658.html) as implemented on the [metagenomeSeq](https://bioconductor.org/packages/release/bioc/html/metagenomeSeq.html) package 
+
+
+First we will rarefy our table using the *phyloseq* function **rarefy_even_depth()** and we also will calculate the proportional abundances using the *phyloseq* function **transform_sample_counts**:
+
+```{r}
+ms174_physeq_rar <- rarefy_even_depth(ms174_physeq_filt_prev)
+
+ms174_physeq_rar_prop <- transform_sample_counts(ms174_physeq_rar, function(x) x/sum(x))
+
+ms174_filt_prev_prop <- transform_sample_counts(ms174_physeq_filt_prev, function(x) x/sum(x))
+```
+
+<br />
+
+Now we will learn how to transform our data using the CSS transformation. First we will install the package from Bioconductor:
+
+```{r eval=FALSE}
+source("https://bioconductor.org/biocLite.R")
+biocLite("metagenomeSeq")
+```
+
+And we load the library:
+
+```{r message=FALSE}
+library(metagenomeSeq)
+```
+
+To perform the transformation we need to create our own function:
+
+<sup>**Note**: Rows correspond to OTUs and columns to samples.</sup>
+
+```{r}
+cssTrans<-function(f.physeq.p = f.physeq.p, norm = norm, log = log){
+  if (taxa_are_rows(f.physeq.p)){
+    OTU <- as((otu_table(f.physeq.p)), "matrix")
+  }else{
+    OTU <- as(t(otu_table(f.physeq.p)), "matrix")
+  }
+  MGS <- newMRexperiment(
+    counts = (OTU)
+  )
+  MGS <- cumNorm(MGS, p = cumNormStat(MGS))
+  f.norm.p <- f.physeq.p
+  otu_table(f.norm.p) <- otu_table((as.matrix(MRcounts(
+    MGS, 
+    norm = norm,
+    log = log,
+    sl = median(unlist(normFactors(MGS)))
+  ))), taxa_are_rows = T)
+  return(f.norm.p)
+}
+
+ms174_physeq_css <- ms174_physeq_filt_prev
+ms174_physeq_css <- cssTrans(ms174_physeq_filt_prev, norm = T, log = F)
+ms174_physeq_css_prop <- transform_sample_counts(ms174_physeq_css, function(x) x/sum(x))
+ms174_physeq_css <- cssTrans(ms174_physeq_filt_prev, norm = T, log = T)
+```
+
+# Occurrence
+
+In this section we will explore the occurrence of the OTUs and we will identify which ones are endemic or ubiquitous
+
+```{r}
+ntaxa(ms174_physeq_filt_prev) 
+
+abd <- otu_table(ms174_physeq_filt_prev) %>% 
+  as.data.frame() %>%
+  mutate(otu_name = row.names(.)) %>%
+  gather(otu_name, count) %>%
+  magrittr::set_colnames(c("otu_id","label","count")) %>%
+  filter(count > 0)
+
+abd_site <- abd %>%
+  group_by(otu_id, label) %>% 
+  summarise_each(funs(sum))
+
+abd_numb <- abd_site %>% 
+  dplyr::select(otu_id) %>% 
+  group_by(otu_id) %>% 
+  dplyr::summarise(N=n())
+
+abd_abund <- abd_site %>% 
+  select(otu_id, count) %>% 
+  group_by(otu_id) %>% 
+  summarise_each(funs(mean))
+
+abundxsample <- abd_numb %>% 
+  left_join(abd_abund) %>%
+  dplyr::mutate(distr = ifelse( N < 5 & count >= 100, "endemic", 
+                                ifelse( N > 6 & count >= 100, "ubiquitous" ,"NA"))) 
+
+abundxsample$distr <- factor(abundxsample$distr, levels=c("endemic", "ubiquitous", "NA"),
+                             labels=c("Endemic", "Ubiquitous", "NA")) 
+
+u <- ggplot(abundxsample, aes(N, count)) 
+u + geom_point(aes(color=distr), size=1) + theme_bw() + 
+  scale_color_manual(values=c( "#CC0000","#009900","#000000"), breaks=c("Endemic","Ubiquitous")) + 
+  scale_y_sqrt() + 
+  xlab("Number of sites") + 
+  ylab("Mean abundance") + 
+  ggtitle("OSD2014 18S OTUs distribution") + 
+  guides(colour = guide_legend(override.aes = list(size=2))) +
+  theme(plot.title = element_text(size = 14, face = "bold"),
+        legend.position="right",
+        legend.title=element_blank(), 
+        legend.key=element_blank(),
+        legend.background = element_rect(fill=alpha('white', 0.4)),
+        axis.title=element_text(size=12),
+        legend.text=element_text(size=12),
+        legend.text.align=0)
+
+ms174_physeq_df <- as.data.frame(otu_table(ms174_physeq_filt_prev))
+```
+
+We defined as endemic OTUs the ones observed in 3 samples and with a mean abundancw >= 100 and ubiquitous are those observed in 7 samples and with a mean abundance >= 100
+
+<br />
+
+Let's explore which *phyla* are the endemic organisms:
+
+```{r}
+empty_as_na <- function(x){
+  if("factor" %in% class(x)) x <- as.character(x) ## since ifelse wont work with factors
+  ifelse(as.character(x)!="", x, NA)
+}
+
+tax_table(ms174_physeq_filt_prev)[abundxsample %>% 
+                       filter(distr ==  "Endemic") %>% 
+                       .$otu_id,] %>%
+  as.data.frame() %>%
+  select(phylum) %>%
+  ggplot(aes(phylum)) + 
+  geom_bar() + 
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
+  xlab("") + 
+  ylab("Number of phyla") +
+  ggtitle("Endemic taxa")
+```
+
+<br />
+
+And the *phyla* for the ubiquitous organisms:
+
+
+```{r}
+tax_table(ms174_physeq_filt_prev)[abundxsample %>% 
+                       filter(distr ==  "Ubiquitous") %>% 
+                       .$otu_id,] %>%
+  as.data.frame() %>%
+  select(class) %>%
+  ggplot(aes(class)) + 
+  geom_bar() + 
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
+  xlab("") + 
+  ylab("Number of phyla") +
+  ggtitle("Ubiquitous taxa")
+```
+
+<br />
+
+# Alpha diversity
+
+Knowing how many different types of organims are present in a sample (diversity) and how they are distributed (eveness) is one of the questions that microbial ecologists want to resolve. There are many different approaches to calculate the diversity indices. In this section we will use the package iNEXT ([Chao et al. 2014](http://onlinelibrary.wiley.com/doi/10.1890/13-0133.1/abstract); [Hsieh et al. 2016](http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12613/abstract)) for the rarefaction (interpolation) and prediction (extrapolation) of alpha diversity using Hill numbers:
+
+- richness (q = 0)
+- exponential Shannon entropy (q = 1)
+- inverse Simpson concentration (q = 2) 
+
+Hill numbers represent diversity metrics as total effective species as weighted by sensitivity to rare taxa with value ‘q’ (richness the most sensitive to rare taxa and Simpson the least). 
+
+
+First we will install **iNext** from CRAN:
+
+```{r eval=FALSE}
+install.packages("iNEXT")
+```
+
+For this example we will subsample the OTU table to use only 50 random OTUs. We will use only 10 bootstraps, in a real analysis the recommended bootstraps are 200.
+
+```{r}
+library(iNEXT)
+ms174_df_subset <- as.data.frame(otu_table(ms174_physeq_filt_prev)[sample(1:ntaxa(ms174_physeq_filt_prev), 50),])
+ms174_alpha <- iNEXT(ms174_df_subset, q=c(0, 1, 2), datatype="abundance", nboot=10)
+```
+
+Let's have a look to the results. We will get three objects:
+
+- **DataInfo**: for summarizing data information
+- **iNextEst**: for showing diversity estimates for rarefied and extrapolated samples along with related statistics
+- **AsyEst**: for showing asymptotic diversity estimates along with related statistics
+
+```{r}
+ms174_alpha
+```
+
+And we can plot the interpolation and extrapolation of the thre Hill numbers with the function **ggiNEXT**:
+
+```{r}
+ggiNEXT(ms174_alpha, facet.var="order")
+```
+
+
+We also can plot the estimates using ggplot:
+
+```{r}
+ms174_alpha_asyEst <- ms174_alpha$AsyEst
+
+ggplot(ms174_alpha_asyEst, aes(x = Site, y = Estimator, color = Diversity)) +
+  geom_point(position = position_dodge(width = 0.1), stat = "identity") +
+  geom_errorbar(position = position_dodge(width = 0.1), width = 0.5, aes(ymin = Estimator - s.e., ymax = Estimator + s.e.), width = 0.2, size = 0.5) +
+  coord_flip() +
+  theme_bw() +
+  guides(color = F) + 
+  theme(legend.position="right") +
+  xlab("") + 
+  ylab("Diversity estimates") + 
+  facet_grid(Diversity~.)
+```
+<br />
+
+We can calculate Pielou's J (eveness) with the following formula:
+
+$J =\frac{H'}{log(S)}$
+
+where **H'** is the the Shannon diversity estimator and **S** is the richness.
+
+<sup>**Note**: iNEXT calculates the exponential Shannon index</sup>
+
+```{r}
+ms174_eveness <- ms174_alpha_asyEst %>% 
+  filter(Diversity == "Species richness") %>% 
+  select(Site, Diversity, Observed) %>% 
+  left_join(ms174_alpha_asyEst %>% 
+              filter(Diversity == "Shannon diversity") %>% 
+              select(Site, Diversity, Estimator), by = "Site") %>% 
+  mutate(pielouJ = log(Estimator)/log(Observed))
+
+ggplot(ms174_eveness, aes(Site, pielouJ)) +
+  geom_bar(stat = "identity") +
+  theme_bw() +
+  xlab("") +
+  ylab("Pielou's evenness") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+```
+
+
+# Session Info
+
+```{r}
+sessionInfo()
+```
