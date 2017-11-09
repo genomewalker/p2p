@@ -36,6 +36,8 @@ echo "export https_proxy=http://webproxy:3128" >> ~/.bashrc
 source ~/.bashrc
 ```
 
+> Only needed at MPI
+
 Once this is ready we can clone the repo if we already didn't do it. Open a terminal and go to your home directory and run this if it's the first time you are cloning the repository:
 
 ```bash
