@@ -24,7 +24,10 @@ There are two main folders:
 
 ## Friday
 
-Tutorial for Friday: [here](https://rawgit.com/genomewalker/p2p/master/friday/P2P_r_crash_course.html)
+Tutorials for Friday:
+
+-   [R crash course](https://rawgit.com/genomewalker/p2p/master/friday/P2P_r_crash_course.html)
+-   [DADA2]((https://rawgit.com/genomewalker/p2p/master/friday/P2P_dada_intro.html))
 
 First we will need to add `export https_proxy=http://webproxy:3128` to `~/.bashrc` with your favourite editor or in a terminal with:
 
@@ -60,7 +63,7 @@ mv p2p-master p2p
 We will follow the instructions from [here](https://github.com/genomewalker/p2p/wiki/Wednesday#getting-ready) and we will create a virtual environment where we are going to install R and some packages:
 
 ```bash
-conda create -n R-3.4.1 r=3.4.1 rstudio r-devtools r-curl r-rjson r-rcpp r-tidyverse r-vegan bioconductor-dada2 bioconductor-phyloseq nycflights13
+conda create -n R-3.4.1 r=3.4.1 rstudio r-devtools r-curl r-rjson r-rcpp r-tidyverse r-vegan bioconductor-dada2 bioconductor-phyloseq r-nycflights13
 ```
 
 Once everything is installed let's activate it:

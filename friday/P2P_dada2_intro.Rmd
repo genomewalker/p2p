@@ -12,9 +12,70 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+From '' :
+
+> ASVs are inferred by a de novo process in which biological sequences are discriminated from errors on the basis of, in part, the expectation that **biological sequences are more likely to be repeatedly observed than are error-containing sequences**. As a result, ASV inference cannot be performed independently on each read—the smallest unit of data from which ASVs can be inferred is a sample. However, unlike de novo OTUs, **ASVs are consistent labels because ASVs represent a biological reality that exists outside of the data being analyzed: the DNA sequence of the assayed organism**. Thus, ASVs inferred independently from different studies or different samples can be validly compared.
+
+
 # DADA2
+Here we walk through version 1.6 of the DADA2 pipeline on a small multi-sample dataset. Our starting point is a set of Illumina-sequenced paired-end fastq files that have been split (or “demultiplexed”) by sample and from which the barcodes/adapters have already been removed. The end product is an amplicon sequence variant (ASV) table, a higher-resolution analogue of the traditional “OTU table”, which records the number of times each amplicon sequence variant was observed in each sample. We also assign taxonomy to the output sequences, and demonstrate how the data can be imported into the popular phyloseq R package for the analysis of microbiome data.
+
+Starting point
+This workflow assumes that your sequencing data meets certain criteria:
+
+Samples have been demultiplexed, i.e. split into individual per-sample fastq files.
+Non-biological nucleotides have been removed, e.g. primers, adapters, linkers, etc.
+If paired-end sequencing data, the forward and reverse fastq files contain reads in matched order.
+If these criteria are not true for your data (are you sure there aren’t any primers hanging around?) you need to remedy those issues before beginning this workflow. See the FAQ for some recommendations for common issues.
+
+Getting ready
+
+```{r eval=FALSE}
+library("devtools")
+devtools::install_github("benjjneb/dada2")
+```
+```{r}
+path <- "../wednesday/data/fastq/" # CHANGE ME to the directory containing the fastq files after unzipping.
+list.files(path)
+```
+
+```{r}
+# Forward and reverse fastq filenames have format: SAMPLENAME_R1_001.fastq and SAMPLENAME_R2_001.fastq
+fnFs <- sort(list.files(path, pattern="_R1.fastq.gz", full.names = TRUE))
+fnRs <- sort(list.files(path, pattern="_R2.fastq.gz", full.names = TRUE))
+# Extract sample names, assuming filenames have format: SAMPLENAME_XXX.fastq
+sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1)
+```
+
+```{r}
+plotQualityProfile(fnFs, aggregate = TRUE)
+```
+```{r}
+plotQualityProfile(fnRs, aggregate = TRUE)
+```
 
 
+```{r}
+filt_path <- file.path(path, "filtered") # Place filtered files in filtered/ subdirectory
+filtFs <- file.path(filt_path, paste0(sample.names, "_F_filt.fastq.gz"))
+filtRs <- file.path(filt_path, paste0(sample.names, "_R_filt.fastq.gz"))
+```
+
+```{r}
+out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, truncLen=c(245,240),
+              maxN=0, maxEE=c(2,2), truncQ=2, rm.phix=TRUE,
+              compress=TRUE, multithread=2)
+```
+
+```{r}
+head(out)
+```
+
+
+```{r}
+errF <- learnErrors(filtFs, multithread=2)
+```
 # Phyloseq
 
 The phyloseq package is a tool to import, store, analyze, and graphically display complex phylogenetic sequencing data that has already been clustered into Operational Taxonomic Units (OTUs), especially when there is associated sample data, phylogenetic tree, and/or taxonomic assignment of the OTUs. We will use the biom object we created to create a phyloseq object, more information [here](http://joey711.github.io/phyloseq/import-data.html). We will use three main methods:
