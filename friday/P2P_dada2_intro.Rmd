@@ -372,7 +372,6 @@ ms174_summary <- otu_table(ms174_physeq) %>%
   gather(asv_name, count, -label) %>%
   group_by(label) %>% 
   mutate(rel_abun = count/sum(count)) %>% 
-  arrange(asv_name, label) %>% 
   filter(count > 0) %>%
   ungroup()
 ```
