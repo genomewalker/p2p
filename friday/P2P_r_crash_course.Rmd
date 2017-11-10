@@ -439,7 +439,7 @@ And we can load phyloseq with:
 library(phyloseq)
 ```
 
-Another method is to install the packages straight from a github repository. Hadley Wickham has developed devtools to make it a painless process. As example we will install [oligo4fun](https://github.com/genomewalker/oligo4fun), a package to perform *pre-oligotyping diagnostics for functional genes* from my github repository (shameless self-promotion) using **install_github()**. First we need to install *devtools* from CRAN and load it:
+Another method is to install the packages straight from a github repository. Hadley Wickham has developed devtools to make it a painless process. As example we will install [breakaway](https://github.com/adw96/breakaway), a package to perform estimate species richness with high diversity using **install_github()**. First we need to install *devtools* from CRAN and load it:
 
 ```{r eval=FALSE}
 install.packages("devtools")
@@ -449,7 +449,8 @@ library(devtools)
 And install oligo4fun from github:
 
 ```{r eval=FALSE}
-install_github("genomewalker/oligo4fun")
+options(unzip = 'internal')
+install_github("adw96/breakaway")
 ```
 
 # Tidyverse
@@ -500,7 +501,7 @@ The dplyr [vignette](https://cran.rstudio.com/web/packages/dplyr/vignettes/intro
 First we will install tidyverse and the data:
 
 ```{r eval=FALSE}
-install.packages(c("tidyverse","nycflights13"))
+install.packages(c("ggpubr"))
 ```
 
 ```{r}
