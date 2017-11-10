@@ -7,54 +7,84 @@ output:
     toc: true
     toc_float: true
     number_sections: true
+    smart: false
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-From '' :
+```{r echo=FALSE}
+load("data/dada2.Rda")
+```
 
-> ASVs are inferred by a de novo process in which biological sequences are discriminated from errors on the basis of, in part, the expectation that **biological sequences are more likely to be repeatedly observed than are error-containing sequences**. As a result, ASV inference cannot be performed independently on each read—the smallest unit of data from which ASVs can be inferred is a sample. However, unlike de novo OTUs, **ASVs are consistent labels because ASVs represent a biological reality that exists outside of the data being analyzed: the DNA sequence of the assayed organism**. Thus, ASVs inferred independently from different studies or different samples can be validly compared.
+# Introduction
 
+In the following tutorial we are going to use [DADA2](https://www.nature.com/nmeth/journal/v13/n7/full/nmeth.3869.html) to analyse the OSD2014 samples from Australia. Since the last couple of years there have been advances in the analaysis of high-throughput marker-gene sequencing datathat are able _"to infer the biological sequences in the sample prior to the introduction of amplification and sequencing errors, and distinguish sequence variants differing by as little as one nucleotide_". A recent paper [Callahan et al. 2017](https://www.nature.com/articles/ismej2017119) suggests to replace the OTUs for the Amplicon Sequence Variants (a nice discussion about why ASVs can be found [here](https://github.com/benjjneb/dada2/issues/62)). So what are those ASVs (a definition from Callahan et al. 2017):
+
+> ASVs are inferred by a de novo process in which biological sequences are discriminated from errors on the basis of, in part, the expectation that **biological sequences are more likely to be repeatedly observed than are error-containing sequences**. As a result, ASV inference cannot be performed independently on each read—the smallest unit of data from which ASVs can be inferred is a sample. However, unlike de novo ASVs, **ASVs are consistent labels because ASVs represent a biological reality that exists outside of the data being analyzed: the DNA sequence of the assayed organism**. Thus, ASVs inferred independently from different studies or different samples can be validly compared.
+
+In the last months one has been able to read very interesting discussions about the pros and cons of using ASVs instead of the traditional OTUs. For example [here](http://fiererlab.org/2017/05/02/lumping-versus-splitting-is-it-time-for-microbial-ecologists-to-abandon-otus/), [here](http://fiererlab.org/2017/10/09/intragenomic-heterogeneity-and-its-implications-for-esvs/) or [here](http://www.academichermit.com/2017/10/11/Review-of-Updating-the-97-identity-threshold.html). 
 
 # DADA2
-Here we walk through version 1.6 of the DADA2 pipeline on a small multi-sample dataset. Our starting point is a set of Illumina-sequenced paired-end fastq files that have been split (or “demultiplexed”) by sample and from which the barcodes/adapters have already been removed. The end product is an amplicon sequence variant (ASV) table, a higher-resolution analogue of the traditional “OTU table”, which records the number of times each amplicon sequence variant was observed in each sample. We also assign taxonomy to the output sequences, and demonstrate how the data can be imported into the popular phyloseq R package for the analysis of microbiome data.
 
-Starting point
-This workflow assumes that your sequencing data meets certain criteria:
+Let's go through the tutorial on how to analyse the OSD2014 australian data. This tutorial is almost an identical copy to the one from the DADA2 developers ([**here**](https://benjjneb.github.io/dada2/tutorial.html)), all kudos for them. 
 
-Samples have been demultiplexed, i.e. split into individual per-sample fastq files.
+> Always check the original one as will be up-to-date
+
+Before starting we have to be sure that our files are in good shape:
+
+> Samples have been demultiplexed, i.e. split into individual per-sample fastq files.
 Non-biological nucleotides have been removed, e.g. primers, adapters, linkers, etc.
 If paired-end sequencing data, the forward and reverse fastq files contain reads in matched order.
 If these criteria are not true for your data (are you sure there aren’t any primers hanging around?) you need to remedy those issues before beginning this workflow. See the FAQ for some recommendations for common issues.
 
-Getting ready
+## Installing DADA2
 
 ```{r eval=FALSE}
 library("devtools")
 devtools::install_github("benjjneb/dada2")
 ```
+
+## Asses quality of our samples
+
+First we will define where is our data. We will use the **wednesday/data/fastq/** folder from our cloned repo:
+
 ```{r}
-path <- "../wednesday/data/fastq/" # CHANGE ME to the directory containing the fastq files after unzipping.
+library(dada2)
+library(tidyverse)
+path <- "../wednesday/data/fastq/"
 list.files(path)
 ```
 
+Let's define a list of file names based searching for the pattern **_R1.fastq.gz** or **_R2.fastq.gz** and parse the file names from the files to be **OSD33** for example:
+
 ```{r}
-# Forward and reverse fastq filenames have format: SAMPLENAME_R1_001.fastq and SAMPLENAME_R2_001.fastq
 fnFs <- sort(list.files(path, pattern="_R1.fastq.gz", full.names = TRUE))
 fnRs <- sort(list.files(path, pattern="_R2.fastq.gz", full.names = TRUE))
-# Extract sample names, assuming filenames have format: SAMPLENAME_XXX.fastq
 sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1)
 ```
+
+## Quality profiles
+
+Once we know where are the files, lets explore their quality profiles. For the forward:
 
 ```{r}
 plotQualityProfile(fnFs, aggregate = TRUE)
 ```
+
+And for the reverse:
 ```{r}
 plotQualityProfile(fnRs, aggregate = TRUE)
 ```
 
+>**Note:** In our case, **aggrate** could be **FALSE** as we have just a few samples, but for a large number of samples can be useful to see global quality trends
+
+This step is very important as we need to figure out which will be the best threshold to trim our reads. If we trim too much, we will not be able to overlap both pair ends, but if we don't trim enough we can have low quality regions.
+
+## Filter and trimming
+
+Once we decided our quality thresholds, let's create the file names for the trimmed files:
 
 ```{r}
 filt_path <- file.path(path, "filtered") # Place filtered files in filtered/ subdirectory
@@ -62,37 +92,195 @@ filtFs <- file.path(filt_path, paste0(sample.names, "_F_filt.fastq.gz"))
 filtRs <- file.path(filt_path, paste0(sample.names, "_R_filt.fastq.gz"))
 ```
 
+Now is time to filter and trim our reads:
+
 ```{r}
-out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, truncLen=c(245,240),
-              maxN=0, maxEE=c(2,2), truncQ=2, rm.phix=TRUE,
-              compress=TRUE, multithread=2)
+out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, truncLen = c(245,240),
+              maxN = 0, maxEE = c(2,2), truncQ = 2, rm.phix = TRUE,
+              compress = TRUE, multithread = 2)
 ```
 
+> Our reads look like to have a very quality, here we decided to trim at positions 245 and 240, but for your data you should carefully look at the quality profiles and try different thresholds. In addition, we will discard any reads with an N (**maxN = 0**), we only will allow 2 errors in both pairs (**maxEE = c(2,2)**) and we will truncate the reads when the quality is smaller than 2 (**truncQ = 2**). For other options use **?filterAndTrim** to get extra information
+
+Let's check how much we filtered out:
 ```{r}
 head(out)
 ```
 
+## Learn error rates
 
-```{r}
+Now we are going to learn the different error rates from our reads. The DADA2 algorithm depends on a parametric error model (err) and every amplicon dataset has a different set of error rates. The  learnErrors method learns the error model from the data, by alternating estimation of the error rates and inference of sample composition until they converge on a jointly consistent solution. As in many optimization problems, the algorithm must begin with an initial guess, for which the maximum possible error rates in this data are used (the error rates if only the most abundant sequence is correct and all the rest are errors). This can take a while, so be patient :-)
+
+First for the forward:
+```{r eval=FALSE}
 errF <- learnErrors(filtFs, multithread=2)
 ```
+
+and for the reverse:
+
+```{r eval=FALSE}
+errR <- learnErrors(filtRs, multithread=2)
+```
+
+Let's explore the estimated error rates. For the forward:
+
+```{r}
+plotErrors(errF, nominalQ=TRUE)
+```
+
+and for the reverse:
+
+```{r}
+plotErrors(errR, nominalQ=TRUE)
+```
+
+The error rates for each possible transition (eg. A->C, A->G, …) are shown. Points are the observed error rates for each consensus quality score. The black line shows the estimated error rates after convergence. The red line shows the error rates expected under the nominal definition of the Q-value.
+
+
+## Dereplication
+
+Now we are going to combine all identical sequencing reads into *unique sequences* keeping track of their abundances. Dereplication is useful to reduce the computation time by eliminating redundant comparisons.
+
+> Dereplication in the DADA2 pipeline has one crucial addition from other pipelines: DADA2 retains a summary of the quality information associated with each unique sequence. The consensus quality profile of a unique sequence is the average of the positional qualities from the dereplicated reads. These quality profiles inform the error model of the subsequent denoising step, significantly increasing DADA2’s accuracy.
+
+Let's dereplicate:
+```{r eval=FALSE}
+derepFs <- derepFastq(filtFs, verbose=TRUE)
+derepRs <- derepFastq(filtRs, verbose=TRUE)
+```
+
+Let's name the dereplicated objects:
+```{r}
+names(derepFs) <- sample.names
+names(derepRs) <- sample.names
+```
+
+
+## Sample inference
+
+Now is time to apply the DADA2 algorithm to identify the sequence variants. Check the [publication](https://www.nature.com/nmeth/journal/v13/n7/full/nmeth.3869.html) for a detailed explanation of the method.
+
+Forward:
+```{r eval=FALSE}
+dadaFs <- dada(derepFs, err=errF, multithread=2)
+```
+
+Reverse:
+```{r eval=FALSE}
+dadaRs <- dada(derepRs, err=errR, multithread=2)
+```
+
+## Merge paired reads
+
+Merging both pair ends will help to reduce the number of spurious sequence variants. Let's merge!
+
+```{r eval=FALSE}
+mergers <- mergePairs(dadaFs, derepFs, dadaRs, derepRs, verbose=TRUE)
+```
+Let's have a look to the results:
+
+```{r}
+head(mergers[[1]])
+```
+> Most of your reads should successfully merge. If that is not the case upstream parameters may need to be revisited: Did you trim away the overlap between your reads?
+
+## Build the sequence table
+We can summarise all results from previous steps and get a higher resolution table:
+
+```{r}
+seqtab <- makeSequenceTable(mergers)
+dim(seqtab)
+table(nchar(getSequences(seqtab)))
+```
+
+Check the sequence distribution of your sequences, if you have shorter on longer than what you expect you should remove them. For example you can use if we are expecting a fragment of 250, we can do `seqtab2 <- seqtab[,nchar(colnames(seqtab)) %in% seq(250,256)])`
+
+
+## Remove chimeras
+Even though DADA2 removed susbtitution and indel errors, chimeras can be still present. The good thing is that removing chimeras from ASVs is easier than with the OTUs: all sequences which can be exactly reconstructed as a bimera (two-parent chimera) from more abundant sequences.
+
+```{r eval=FALSE}
+seqtab.nochim <- removeBimeraDenovo(seqtab, method="consensus", multithread=2, verbose=TRUE)
+dim(seqtab.nochim)
+```
+
+How many reads we lose due to chimeras:
+```{r}
+sum(seqtab.nochim)/sum(seqtab)
+```
+
+## Track reads through the pipeline
+
+Now we can summarise the different steps of the pipeline:
+```{r}
+getN <- function(x) sum(getUniques(x))
+track <- cbind(out, sapply(dadaFs, getN), sapply(mergers, getN), rowSums(seqtab), rowSums(seqtab.nochim))
+# If processing a single sample, remove the sapply calls: e.g. replace sapply(dadaFs, getN) with getN(dadaFs)
+colnames(track) <- c("input", "filtered", "denoised", "merged", "tabled", "nonchim")
+rownames(track) <- sample.names
+head(track)
+```
+
+Let's plot the results:
+
+```{r}
+track_long <- as.data.frame(track) %>%
+  rownames_to_column(var = "sample") %>%
+  gather(variable, value, -sample) %>%
+  tbl_df()
+
+track_long$variable <- factor(track_long$variable, levels = colnames(track))
+
+ggplot(track_long, aes(variable, value, fill = variable)) +
+  geom_bar(stat = "identity", position = "dodge") + 
+  scale_fill_brewer(palette="Paired") +
+  facet_wrap(~sample) +
+  xlab("DADA2 steps") +
+  ylab("Number of sequences") +
+  theme_light() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_y_continuous(labels = scales::comma)
+```
+
+## Assign taxonomy
+DADA2 uses the [RDP's naive Bayesian classifier](http://www.ncbi.nlm.nih.gov/pubmed/17586664) to taxonomically classify the sequence variants. We are going to use the SILVA database as a reference:
+
+```{r eval=FALSE}
+taxa <- assignTaxonomy(seqtab.nochim, "../wednesday/data/resources/Training/silva_nr_v128_train_set.fa.gz", multithread = 2)
+```
+
+Let's have a look to the taxonomic assignments:
+
+```{r}
+taxa.print <- taxa # Removing sequence rownames for display only
+rownames(taxa.print) <- NULL
+head(taxa.print)
+```
+Finally we have our ASVs ready for downstream analyses :-)
+
 # Phyloseq
 
-The phyloseq package is a tool to import, store, analyze, and graphically display complex phylogenetic sequencing data that has already been clustered into Operational Taxonomic Units (OTUs), especially when there is associated sample data, phylogenetic tree, and/or taxonomic assignment of the OTUs. We will use the biom object we created to create a phyloseq object, more information [here](http://joey711.github.io/phyloseq/import-data.html). We will use three main methods:
+The phyloseq package is a tool to import, store, analyze, and graphically display complex phylogenetic sequencing data that has already been clustered into Operational Taxonomic Units (ASVs), especially when there is associated sample data, phylogenetic tree, and/or taxonomic assignment of the ASVs. We will use the biom object we created to create a phyloseq object, more information [here](http://joey711.github.io/phyloseq/import-data.html). We will use three main methods:
 
-- **otu_table**: for constructing and accessing OTU abundance objects
+- **otu_table**: for constructing and accessing ASV abundance objects
 - **sample_data**: for constructing and accessing a table of sample-level variables
 - **tax_table**: for constructing and accessing a table of taxonomic names, organized with ranks as columns
 
-And we will combine them with **phyloseq**:
+Let's read the contextual data:
+```{r}
+sam_df <- read_tsv(file = "data/for_R/ms174_p2p-workshop_ref_sample_data.tsv", col_names = TRUE) %>%
+  as.data.frame()
+row.names(sam_df) <- sam_df$label
+```
+
+And finally we combine everything in a phyloseq object
 
 ```{r}
 library(phyloseq)
 
-otutable <- otu_table(as.matrix(biom_data(otuXsample_biom)), taxa_are_rows = TRUE) 
-sampletable <- sample_data(as.data.frame(data.matrix(sample_metadata(otuXsample_biom))))
-taxtable <- tax_table(as.matrix(observation_metadata(otuXsample_biom)))
-ms174_physeq <- phyloseq(otutable, sampletable, taxtable)
+ms174_physeq <- phyloseq(otu_table(seqtab.nochim, taxa_are_rows=FALSE), 
+               sample_data(sam_df), 
+               tax_table(taxa))
 ms174_physeq
 ```
 
@@ -107,17 +295,17 @@ Or the sample variable names:
 sample_variables(ms174_physeq)
 ```
 
-Or the OTU names:
+Or the ASV names:
 ```{r}
 taxa_names(ms174_physeq)[1:10]
 ```
 
-We can subset data, for example let's keep only the OTUs from Bacteroidetes:
+We can subset data, for example let's keep only the ASVs from Bacteroidetes:
 ```{r}
-ms174_physeq_bct = subset_taxa(ms174_physeq, phylum == "Bacteroidetes")
+ms174_physeq_bct = subset_taxa(ms174_physeq, Phylum == "Bacteroidetes")
 ms174_physeq_bct
 ```
-We can see that 3260 OTUs belong to the phylum Bacteroidetes.
+We can see that 151 ASVs belong to the phylum Bacteroidetes.
 
 Phyloseq also provides really nice graphical capabilities based on ggplot2. For example with **plot_bar** we can plot the abundance of Bacteroidetes in each sample:
 
@@ -127,15 +315,27 @@ plot_bar(ms174_physeq_bct)
 
 And color the plot based in the order:
 ```{r}
-plot_bar(ms174_physeq_bct, fill="order")
+plot_bar(ms174_physeq_bct, fill="Order")
 ```
 
 We can see that Flavobacteriales are the most abundant.
 
 
-Let's remove all Chloroplasts and Mitochondria OTUs:
+Let's collect the Chloroplasts and Mitochondria ASVs and store in an object:
+
+> It is always interesting to keep track of them and maybe will be useful to answer some questions
+
 ```{r}
-ms174_physeq <- subset_taxa(ms174_physeq, class !="Chloroplast" | family != "Mitochondria")
+ms174_physeq_chl_mit <- subset_taxa(ms174_physeq, (Class == "Chloroplast" | Family == "Mitochondria"))
+```
+
+Now let's remove them from the *ms174_physeq* object:
+
+```{r}
+chl_mit_tax <- taxa_names(ms174_physeq_chl_mit)
+all_tax <- taxa_names(ms174_physeq)
+keep_taxa <- all_tax[!(all_tax %in% chl_mit_tax)]
+ms174_physeq <- prune_taxa(keep_taxa, ms174_physeq)
 ms174_physeq
 ```
 
@@ -143,15 +343,17 @@ Phyloseq also has methods to rarefy to even depth and estimate and calculate mea
 ```{r}
 ms174_physeq_rar <- rarefy_even_depth(ms174_physeq)
 plot_bar(ms174_physeq_rar)
-plot_richness(ms174_physeq_rar, measures=c("Observed", "Shannon", "InvSimpson"))
+plot_richness(ms174_physeq_rar, measures=c("Shannon", "InvSimpson"))
 ```
+
+> **NOTE**: Be aware that ASVs can not be used to estimate **richness** with the actual methods. A nice explanation can be found [here](https://github.com/benjjneb/dada2/issues/317#issuecomment-324173595) Have in mind that the results of DADA2 (and similar methods) don't contain sigletons. 
 
 And we even can perform ordinations. For example MDS with Euclidean distance and colored by temperature:
 ```{r}
 ms174_physeq_even <- transform_sample_counts(ms174_physeq, function(x) 1E6 * x/sum(x))
-ms174_physeq_sum <- tapply(taxa_sums(ms174_physeq_even), tax_table(ms174_physeq_even)[, "phylum"], sum, na.rm=TRUE)
+ms174_physeq_sum <- tapply(taxa_sums(ms174_physeq_even), tax_table(ms174_physeq_even)[, "Phylum"], sum, na.rm=TRUE)
 top5phyla <- names(sort(ms174_physeq_sum, TRUE))[1:5]
-ms174_physeq_even <- prune_taxa((tax_table(ms174_physeq_even)[, "phylum"] %in% top5phyla), ms174_physeq_even)
+ms174_physeq_even <- prune_taxa((tax_table(ms174_physeq_even)[, "Phylum"] %in% top5phyla), ms174_physeq_even)
 
 ms174_physeq_ord <- ordinate(ms174_physeq_even, "MDS", "euclidean")
 plot_ordination(ms174_physeq_even, ms174_physeq_ord, type="samples", color = "noaa_temperature")
@@ -161,19 +363,18 @@ plot_ordination(ms174_physeq_even, ms174_physeq_ord, type="samples", color = "no
 
 # Exploring the data
 
-Now we will use all what we learnt to explore our data set. First we will create a summary file where we will group the OTUs by sample, we will calculate the relative abundance of each OTU and we will remove those OTUs with 0 counts. 
+Now we will use all what we learnt to explore our data set. First we will create a summary file where we will group the ASVs by sample, we will calculate the relative abundance of each ASV and we will remove those ASVs with 0 counts. 
 
 ```{r}
-library(magrittr)
 ms174_summary <- otu_table(ms174_physeq) %>% 
   as.data.frame() %>%
-  mutate(otu_name = row.names(.)) %>%
-  gather(otu_name, count) %>%
-  set_colnames(c("otu_name","label","count")) %>% 
+  rownames_to_column(var = "label") %>%
+  gather(asv_name, count, -label) %>%
   group_by(label) %>% 
   mutate(rel_abun = count/sum(count)) %>% 
-  arrange(otu_name, label) %>% 
-  filter(count > 0)
+  arrange(asv_name, label) %>% 
+  filter(count > 0) %>%
+  ungroup()
 ```
 
 Let's check the number of counts per sample:
@@ -189,8 +390,8 @@ We we will explore the amount of **absolute singletons** and **abundant singleto
 
 ```{r}
 ms174_prevalence <- ms174_summary %>% 
-  select(otu_name, count) %>% 
-  group_by(otu_name) %>% 
+  select(asv_name, count) %>% 
+  group_by(asv_name) %>% 
   summarise(prev = sum(count >0), total_counts = sum(count)) 
 
 ms174_abs_singletons <- ms174_prevalence %>% 
@@ -199,69 +400,122 @@ ms174_abs_singletons <- ms174_prevalence %>%
 ms174_abun_singletons <- ms174_prevalence %>% 
   dplyr::filter(total_counts > 1, prev <= 1)
 
-ms174_abs_singletons_names <- ms174_abs_singletons$otu_name
-
-ms174_abun_doubletons <- ms174_prevalence %>% 
-  filter(!(otu_name %in% ms174_abs_singletons_names)) %>% 
-  dplyr::filter( prev <= 2)
+ms174_abs_singletons_names <- ms174_abs_singletons$asv_name
 
 # Remove absolute singletons
 ms174_prevalence <- ms174_prevalence %>% 
-  filter(!(otu_name %in% ms174_abs_singletons_names))
+  filter(!(asv_name %in% ms174_abs_singletons_names))
 ```
 
 
 ```{r}
-ms174_counts <- data.frame(class = c("Total OTUs","Absolute singletons", "Abundant singletons"), 
-                           counts = c(length(unique(ms174_summary$otu_name)),
+ms174_counts <- data.frame(class = c("Total ASVs","Absolute singletons", "Abundant singletons"), 
+                           counts = c(length(unique(ms174_summary$asv_name)),
                                       dim(ms174_abs_singletons)[1], 
                                       dim(ms174_abun_singletons)[1]))
 
 print(ms174_counts)
 
-ms174_counts$class <- factor(ms174_counts$class, levels=c("Total OTUs","Absolute singletons", "Abundant singletons"))
+ms174_counts$class <- factor(ms174_counts$class, levels=c("Total ASVs","Absolute singletons", "Abundant singletons"))
 
 ggplot(ms174_counts, aes(class, counts)) +
   geom_bar(stat = "identity") + theme_bw() +
-  xlab("") + ylab("# OTUs")
+  xlab("") + ylab("# ASVs")
 
 ```
 
-We have a  high number of **absolute singletons** that we will remove. The reason of this high number of singletons is not clear, but we should review the read merging and quality filtering process.
+As we can see, there are no **absolute singletons**, in case you observe some of them, they are coming from the merging steps.
 
-### OTU prevalence
+## ASV prevalence
 
-Next step is to analyse the prevalence of the remaining OTUs. The idea is to keep the OTUs that at least appear in a certain number of samples. In this tutorial we will apply a strict filtering (OTUs should be present in at least 50% of the samples) to reduce the number of OTUs. In a real life analysis this should be careful examined. The following plots will help to choose the best threshold:
+Next step is to analyse the prevalence of the remaining ASVs. The idea is to explore the ASVs that at least appear in a certain number of samples.  In a real life analysis this should be careful examined. The following plots will help to choose the best threshold:
 
 ```{r}
-ms174_prevalence_dist <- lapply(seq(0.00,0.60,0.15), function (X) {
+ms174_prevalence_dist <- lapply(seq(0.00,0.60,0.1), function (X) {
   ms174_prevalence %>% 
     filter(prev >= nsamples(ms174_physeq) * X) %>%
     summarise(N=n()) %>% mutate(N = N, prev=paste(100*X, "%", sep = ""), nsamples = round(nsamples(ms174_physeq) * X))
 }) %>% bind_rows()
 
-ms174_prevalence_dist$prev <- factor(ms174_prevalence_dist$prev , levels=paste(100*seq(0.00,0.60,0.15), "%", sep = ""))
+ms174_prevalence_dist$prev <- factor(ms174_prevalence_dist$prev , levels=paste(100*seq(0.00,0.60,0.1), "%", sep = ""))
 
 ggplot(ms174_prevalence_dist, aes(prev, N, group=1)) +
   geom_line() +
   geom_point() + 
   theme_bw() +
-  xlab("Prevalence") + ylab("# OTUs")
+  xlab("Prevalence") + ylab("# ASVs")
 ```
 
-In the plot we can see how the number of OTUs decreases as they occur in more sample. We will choose those OTUs that at least occur in 4 samples.
+In the plot we can see how the number of ASVs decreases as they occur in more samples. 
+
+In addition we will explore the occurrence of the different ASVs at different abundances and how many sequences we keep with each threshold. The idea is to keep ASVs with a certain abundance among the samples. In this tutorial, we only will keep those OTUs with at least 25 counts total over all samples and remove all samples with less than 10,000 counts.
 
 ```{r}
+library(ggpubr)
+library(ggrepel)
+
+prev_results <- vector(mode = "list")
+for (i in 5:50){
+
+minabun <- i
+
 ms174_prevalence_filt <- ms174_prevalence %>% 
-  filter(prev >= nsamples(ms174_physeq) * 0.50)
+  filter(total_counts >= minabun)
+
+ms174_physeq_prev <- prune_taxa(ms174_prevalence_filt %>% .$asv_name %>% as.vector, ms174_physeq)
+
+ms174_physeq_prev <- prune_samples(sample_sums(ms174_physeq_prev) >= 10000, ms174_physeq_prev)
+
+ms174_physeq_prev <- prune_taxa(taxa_sums(ms174_physeq_prev) > 0, ms174_physeq_prev)
+
+prev_results[[i]] <- data.frame(minabun=i, num_seq = ms174_physeq_prev %>% sample_sums %>% sum, num_otu = ntaxa(ms174_physeq_prev)) 
+}
+
+prev_results <- bind_rows(prev_results)
+
+p1 <- ggplot(prev_results, aes(minabun, num_otu)) +
+  geom_line() +
+  geom_point() + 
+  scale_y_continuous(labels = scales::comma) +
+  geom_label_repel(data = prev_results %>% filter(minabun == 5), aes(minabun, num_otu, label = scales::comma(num_otu)), arrow = arrow(length = unit(0.01, 'npc')), box.padding = unit(1.5, 'lines')) +
+  geom_label_repel(data = prev_results %>% filter(minabun == 25), aes(minabun, num_otu, label = scales::comma(num_otu)), arrow = arrow(length = unit(0.01, 'npc')), box.padding = unit(1.5, 'lines')) +
+  geom_label_repel(data = prev_results %>% filter(minabun == 50), aes(minabun, num_otu, label = scales::comma(num_otu)), arrow = arrow(length = unit(0.01, 'npc')), box.padding = unit(1.5, 'lines')) +
+  theme_light() +
+  xlab("Minimum abundance") +
+  ylab("Number of ASVs")
+
+
+
+p2 <- ggplot(prev_results, aes(minabun, num_seq)) +
+  geom_line() +
+  geom_point() +
+  scale_y_continuous(labels = scales::comma) +
+  geom_label_repel(data = prev_results %>% filter(minabun == 5), aes(minabun, num_seq, label = scales::comma(num_seq)), arrow = arrow(length = unit(0.01, 'npc')), box.padding = unit(1.5, 'lines')) +
+  geom_label_repel(data = prev_results %>% filter(minabun == 25), aes(minabun, num_seq, label = scales::comma(num_seq)), arrow = arrow(length = unit(0.01, 'npc')), box.padding = unit(1.5, 'lines')) +
+  geom_label_repel(data = prev_results %>% filter(minabun == 50), aes(minabun, num_seq, label = scales::comma(num_seq)), arrow = arrow(length = unit(0.01, 'npc')), box.padding = unit(1.5, 'lines')) +
+  theme_light() +
+  xlab("Minimum abundance") +
+  ylab("Number of sequences")
+
+ggarrange(p1, p2, nrow = 1, ncol = 2)
+```
+
+
+Let's filter...
+
+```{r}
+minabun <- 25
+
+ms174_prevalence_filt <- ms174_prevalence %>% 
+  filter(total_counts >= minabun)
 
 summary(ms174_prevalence_filt$prev)
 
-ms174_physeq_filt_prev <- prune_taxa(ms174_prevalence_filt %>% .$otu_name %>% as.vector, ms174_physeq)
+ms174_physeq_filt_prev <- prune_taxa(ms174_prevalence_filt %>% .$asv_name %>% as.vector, ms174_physeq)
 ms174_physeq_filt_prev
 ```
 
-We kept 303 OTUs from the original 27,267 OTUs. 
+We kept ~`r ntaxa(ms174_physeq_filt_prev)` ASVs from the original ~`r ntaxa(ms174_physeq)` ASVs. 
 
 We explore the counts for each sample after the filtering:
 
@@ -277,7 +531,7 @@ ggplot(as.data.frame(ms174_readsXsample) %>% mutate(read_counts = ms174_readsXsa
 ```
 
 
-# Normalization
+## Normalization
 From [McMurdie et al. 2014](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003531):
 
 > many microbiome samples are sequenced at the same time on the same DNA sequencing machine, but often result in total numbers of sequences per sample that are vastly different. The common procedure for addressing this difference in sequencing effort across samples – different library sizes – is to either (1) base analyses on the proportional abundance of each species in a library, or (2) rarefy, throw away sequences from the larger libraries so that all have the same, smallest size. We show that both of these normalization methods can work when comparing obviously-different whole microbiomes, but that neither method works well when comparing the relative proportions of each bacterial species across microbiome samples.
@@ -312,17 +566,17 @@ library(metagenomeSeq)
 
 To perform the transformation we need to create our own function:
 
-<sup>**Note**: Rows correspond to OTUs and columns to samples.</sup>
+<sup>**Note**: Rows correspond to ASVs and columns to samples.</sup>
 
 ```{r}
 cssTrans<-function(f.physeq.p = f.physeq.p, norm = norm, log = log){
   if (taxa_are_rows(f.physeq.p)){
-    OTU <- as((otu_table(f.physeq.p)), "matrix")
+    ASV <- as((otu_table(f.physeq.p)), "matrix")
   }else{
-    OTU <- as(t(otu_table(f.physeq.p)), "matrix")
+    ASV <- as(t(otu_table(f.physeq.p)), "matrix")
   }
   MGS <- newMRexperiment(
-    counts = (OTU)
+    counts = (ASV)
   )
   MGS <- cumNorm(MGS, p = cumNormStat(MGS))
   f.norm.p <- f.physeq.p
@@ -341,49 +595,50 @@ ms174_physeq_css_prop <- transform_sample_counts(ms174_physeq_css, function(x) x
 ms174_physeq_css <- cssTrans(ms174_physeq_filt_prev, norm = T, log = T)
 ```
 
-# Occurrence
+## Occurrence
 
-In this section we will explore the occurrence of the OTUs and we will identify which ones are endemic or ubiquitous
+In this section we will explore the occurrence of the ASVs and we will identify which ones are endemic or ubiquitous
 
 ```{r}
 ntaxa(ms174_physeq_filt_prev) 
 
 abd <- otu_table(ms174_physeq_filt_prev) %>% 
   as.data.frame() %>%
-  mutate(otu_name = row.names(.)) %>%
-  gather(otu_name, count) %>%
-  magrittr::set_colnames(c("otu_id","label","count")) %>%
+  rownames_to_column(var = "label") %>%
+  gather(asv_id, count, -label) %>%
   filter(count > 0)
 
 abd_site <- abd %>%
-  group_by(otu_id, label) %>% 
-  summarise_each(funs(sum))
+  group_by(asv_id, label) %>% 
+  dplyr::summarise(count = sum(count))
 
 abd_numb <- abd_site %>% 
-  dplyr::select(otu_id) %>% 
-  group_by(otu_id) %>% 
-  dplyr::summarise(N=n())
+  dplyr::select(asv_id) %>% 
+  group_by(asv_id) %>% 
+  dplyr::count()
 
 abd_abund <- abd_site %>% 
-  select(otu_id, count) %>% 
-  group_by(otu_id) %>% 
-  summarise_each(funs(mean))
+  dplyr::select(asv_id, count) %>% 
+  group_by(asv_id) %>% 
+  dplyr::summarise(mean_abun = mean(count))
+
+abundxsample <- abd_numb %>% 
+  left_join(abd_abund)
+
 
 abundxsample <- abd_numb %>% 
   left_join(abd_abund) %>%
-  dplyr::mutate(distr = ifelse( N < 5 & count >= 100, "endemic", 
-                                ifelse( N > 6 & count >= 100, "ubiquitous" ,"NA"))) 
+  dplyr::mutate(distr = ifelse( n < 3 & mean_abun >= 100, "endemic", 
+                                ifelse( n > 6 & mean_abun >= 100, "ubiquitous" ,"NA"))) 
 
 abundxsample$distr <- factor(abundxsample$distr, levels=c("endemic", "ubiquitous", "NA"),
                              labels=c("Endemic", "Ubiquitous", "NA")) 
 
-u <- ggplot(abundxsample, aes(N, count)) 
-u + geom_point(aes(color=distr), size=1) + theme_bw() + 
-  scale_color_manual(values=c( "#CC0000","#009900","#000000"), breaks=c("Endemic","Ubiquitous")) + 
+ggplot(abundxsample,  aes(n, mean_abun, color = distr)) +
+  geom_point(size=1, alpha = 0.6) + theme_bw() + 
   scale_y_sqrt() + 
   xlab("Number of sites") + 
   ylab("Mean abundance") + 
-  ggtitle("OSD2014 18S OTUs distribution") + 
   guides(colour = guide_legend(override.aes = list(size=2))) +
   theme(plot.title = element_text(size = 14, face = "bold"),
         legend.position="right",
@@ -397,11 +652,13 @@ u + geom_point(aes(color=distr), size=1) + theme_bw() +
 ms174_physeq_df <- as.data.frame(otu_table(ms174_physeq_filt_prev))
 ```
 
-We defined as endemic OTUs the ones observed in 3 samples and with a mean abundancw >= 100 and ubiquitous are those observed in 7 samples and with a mean abundance >= 100
+We defined as endemic ASVs the ones observed in 3 samples and with a mean abundancw >= 100 and ubiquitous are those observed in 7 samples and with a mean abundance >= 100
+
+> Remember this is a dummy example
 
 <br />
 
-Let's explore which *phyla* are the endemic organisms:
+Let's explore which *phyla* are the ubiquitous organisms:
 
 ```{r}
 empty_as_na <- function(x){
@@ -411,10 +668,10 @@ empty_as_na <- function(x){
 
 tax_table(ms174_physeq_filt_prev)[abundxsample %>% 
                        filter(distr ==  "Endemic") %>% 
-                       .$otu_id,] %>%
+                       .$asv_id,] %>%
   as.data.frame() %>%
-  select(phylum) %>%
-  ggplot(aes(phylum)) + 
+  select(Phylum) %>%
+  ggplot(aes(Phylum)) + 
   geom_bar() + 
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
@@ -431,10 +688,10 @@ And the *phyla* for the ubiquitous organisms:
 ```{r}
 tax_table(ms174_physeq_filt_prev)[abundxsample %>% 
                        filter(distr ==  "Ubiquitous") %>% 
-                       .$otu_id,] %>%
+                       .$asv_id,] %>%
   as.data.frame() %>%
-  select(class) %>%
-  ggplot(aes(class)) + 
+  select(Class) %>%
+  ggplot(aes(Class)) + 
   geom_bar() + 
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
@@ -445,90 +702,93 @@ tax_table(ms174_physeq_filt_prev)[abundxsample %>%
 
 <br />
 
-# Alpha diversity
+## Alpha diversity
 
-Knowing how many different types of organims are present in a sample (diversity) and how they are distributed (eveness) is one of the questions that microbial ecologists want to resolve. There are many different approaches to calculate the diversity indices. In this section we will use the package iNEXT ([Chao et al. 2014](http://onlinelibrary.wiley.com/doi/10.1890/13-0133.1/abstract); [Hsieh et al. 2016](http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12613/abstract)) for the rarefaction (interpolation) and prediction (extrapolation) of alpha diversity using Hill numbers:
+Knowing how many different types of organims are present in a sample (diversity) and how they are distributed (eveness) is one of the questions that microbial ecologists want to resolve. There are many different approaches to calculate the diversity indices. In this example we will use [**breakaway**](https://github.com/adw96/breakaway) from Amy Willis (have a look to her lectures [here](https://stamps.mbl.edu/index.php/Schedule))
 
-- richness (q = 0)
-- exponential Shannon entropy (q = 1)
-- inverse Simpson concentration (q = 2) 
+We will follow the tutorial on **Estimating alpha diversity** in the **Getting started** document.
 
-Hill numbers represent diversity metrics as total effective species as weighted by sensitivity to rare taxa with value ‘q’ (richness the most sensitive to rare taxa and Simpson the least). 
+First we will create a frequency table from our ASV table:
 
+````{r}
+library(breakaway)
+ms174_asv_table <- t(otu_table(ms174_physeq))
+ms174_ftable <- build_frequency_count_tables(ms174_asv_table)
+```
 
-First we will install **iNext** from CRAN:
+The table shows the frequency of how many times we observed an ASV.
 
+```{r}
+head(ms174_ftable[[1]])
+```
+
+Let's get a estimate of **Shannon** diversity for the first sample:
+
+```{r}
+shannon(ms174_ftable[[1]])
+```
+
+It's important to know how variable are our estimates, let's use the function **resample_estimate** to get a feeling about the variability:
+
+```{r}
+set.seed(2) # the following functions are random, so let's set the seed (allows reproducibility)
+resample_estimate(ms174_asv_table[,1], shannon)
+```
+
+```{r}
+resample_estimate(ms174_asv_table[,1], shannon)
+```
+
+```{r}
+resample_estimate(ms174_asv_table[,1], shannon)
+```
+
+In our dummy example the variation is not to high, but we see how our estimates slightly change. Let's repeat what we have done many times:
+
+```{r}
+par(mfrow=c(1,1))
+hist(replicate(200, resample_estimate(ms174_asv_table[,1], shannon)))
+```
+
+Now we can see that there is some negative skew, suggesting that might be the risk of observing some low shannon estimates. We don't know how is causing this variability, but one source of it can be differences in the ammount of reads in each sample. Let's explore how many reads do we have in each sample:
+
+```{r}
+ns <- unlist(lapply(ms174_ftable, function(x) sum(x[,1]*x[,2])))
+hist(ns)
+```
+
+We have three clear groups of number of reads, let's look at our distribution of shannon estimates taking in account the number of reads per sample:
+```{r}
+set.seed(8)
+shannon_est_ns <- replicate(200, resample_estimate(ms174_asv_table[,1], shannon, my_sample_size = ns))
+hist(shannon_est_ns)
+```
+
+In our case the variability is quite low, but we just have a dummy example
+```{r}
+sd(shannon_est_ns)
+```
+## Modeling alpha diversity
+
+Now let's do some comparisons between samples:
 ```{r eval=FALSE}
-install.packages("iNEXT")
+estimates_shannon <- matrix(NA,nrow=dim(ms174_asv_table)[2],ncol=4)
+rownames(estimates_shannon) <- colnames(ms174_asv_table)
+colnames(estimates_shannon) <- c("shannon_est","shannon_seest","shannon_lcb","shannon_ucb")
+for (i in 1:dim(ms174_asv_table)[2]) {
+  samples <- replicate(200, resample_estimate(ms174_asv_table[,i], shannon, my_sample_size = ns))
+  estimates_shannon[i,1] <- mean(samples)
+  estimates_shannon[i,2] <- sd(samples)
+  estimates_shannon[i,3:4] <- quantile(samples, c(0.025, 0.975))
+}
 ```
-
-For this example we will subsample the OTU table to use only 50 random OTUs. We will use only 10 bootstraps, in a real analysis the recommended bootstraps are 200.
+Here gives us our estimates and standard errors so we can have a look estimates_shannon[,1:]. The function **betta_pic** will plot the results.
 
 ```{r}
-library(iNEXT)
-ms174_df_subset <- as.data.frame(otu_table(ms174_physeq_filt_prev)[sample(1:ntaxa(ms174_physeq_filt_prev), 50),])
-ms174_alpha <- iNEXT(ms174_df_subset, q=c(0, 1, 2), datatype="abundance", nboot=10)
+betta_pic(estimates_shannon[,1], estimates_shannon[,2])
 ```
+> Don’t forget that because we are plotting diversity estimates, we need to plot lines (i.e. confidence intervals) not points (point estimates). That’s very important.
 
-Let's have a look to the results. We will get three objects:
-
-- **DataInfo**: for summarizing data information
-- **iNextEst**: for showing diversity estimates for rarefied and extrapolated samples along with related statistics
-- **AsyEst**: for showing asymptotic diversity estimates along with related statistics
-
-```{r}
-ms174_alpha
-```
-
-And we can plot the interpolation and extrapolation of the thre Hill numbers with the function **ggiNEXT**:
-
-```{r}
-ggiNEXT(ms174_alpha, facet.var="order")
-```
-
-
-We also can plot the estimates using ggplot:
-
-```{r}
-ms174_alpha_asyEst <- ms174_alpha$AsyEst
-
-ggplot(ms174_alpha_asyEst, aes(x = Site, y = Estimator, color = Diversity)) +
-  geom_point(position = position_dodge(width = 0.1), stat = "identity") +
-  geom_errorbar(position = position_dodge(width = 0.1), width = 0.5, aes(ymin = Estimator - s.e., ymax = Estimator + s.e.), width = 0.2, size = 0.5) +
-  coord_flip() +
-  theme_bw() +
-  guides(color = F) + 
-  theme(legend.position="right") +
-  xlab("") + 
-  ylab("Diversity estimates") + 
-  facet_grid(Diversity~.)
-```
-<br />
-
-We can calculate Pielou's J (eveness) with the following formula:
-
-$J =\frac{H'}{log(S)}$
-
-where **H'** is the the Shannon diversity estimator and **S** is the richness.
-
-<sup>**Note**: iNEXT calculates the exponential Shannon index</sup>
-
-```{r}
-ms174_eveness <- ms174_alpha_asyEst %>% 
-  filter(Diversity == "Species richness") %>% 
-  select(Site, Diversity, Observed) %>% 
-  left_join(ms174_alpha_asyEst %>% 
-              filter(Diversity == "Shannon diversity") %>% 
-              select(Site, Diversity, Estimator), by = "Site") %>% 
-  mutate(pielouJ = log(Estimator)/log(Observed))
-
-ggplot(ms174_eveness, aes(Site, pielouJ)) +
-  geom_bar(stat = "identity") +
-  theme_bw() +
-  xlab("") +
-  ylab("Pielou's evenness") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
-```
 
 
 # Session Info
