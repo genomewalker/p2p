@@ -27,7 +27,7 @@ There are two main folders:
 Tutorials for Friday:
 
 -   [R crash course](https://rawgit.com/genomewalker/p2p/master/friday/P2P_r_crash_course.html)
--   [DADA2]((https://rawgit.com/genomewalker/p2p/master/friday/P2P_dada_intro.html))
+-   [DADA2](https://rawgit.com/genomewalker/p2p/master/friday/P2P_dada_intro.html)
 
 First we will need to add `export https_proxy=http://webproxy:3128` to `~/.bashrc` with your favourite editor or in a terminal with:
 
